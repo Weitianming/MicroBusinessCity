@@ -8,7 +8,5 @@ html, body {font-family: "微软雅黑"; width: 100%; height: 100%; line-height:
 input:-ms-input-placeholder {color: #BCBCBC;opacity:1;}
 input::-webkit-input-placeholder {color: #BCBCBC;opacity:1;}*/
 
-/*头部tab*/
-.vux-tab {height: 50px!important;/*no*/}
-.vux-tab-item {font-size: 18px!important;/*px*/ line-height: 48px!important;/*px*/}
+
 

@@ -87,6 +87,11 @@ export default {
     }
   },
   deactivated () {
+    const self = this
+    self.$store.commit('scrollMutationsTrue')
+    console.log(self.$store.state.mainModules.scroll)
+    self.$store.commit('scrollMutationsFalse')
+//  self.listData = []
   },
   methods: {
     ...mapActions('state/shoppingModules', ['commodityIdActions']),
