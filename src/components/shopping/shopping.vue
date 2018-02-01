@@ -82,16 +82,15 @@ export default {
     }
   },
   activated () {
+    this.$store.commit('setScrollIndexMutations', this.$store.state.mainModules.shoppingScroll)
     for (var i = 0; i < 10; i++) {
       this.listData.push(this.ceshi)
     }
   },
   deactivated () {
     const self = this
-    self.$store.commit('scrollMutationsTrue')
-    console.log(self.$store.state.mainModules.scroll)
-    self.$store.commit('scrollMutationsFalse')
-//  self.listData = []
+    self.$store.commit('shoppingScrollMutationsTrue')
+    self.listData = []
   },
   methods: {
     ...mapActions('state/shoppingModules', ['commodityIdActions']),

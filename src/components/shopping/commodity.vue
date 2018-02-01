@@ -225,12 +225,13 @@ export default {
       registerTimeData: state => state.loginModules.registerTimeData // 倒计时
     })
   },
+  created () {
+    console.log(111)
+  },
   activated () {
     const self = this
-    self.$store.commit('scrollMutationsTrue')
-    setTimeout(() => {
-      self.$store.commit('setScrollIndexMutations', 0)
-    }, 0)
+//  self.$store.commit('setScrollIndexMutations', 0)
+//  self.$store.commit('scrollMutationsTrue')
   },
   deactivated () {
     this.$store.commit('scrollMutationsFalse')

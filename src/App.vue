@@ -128,6 +128,14 @@ export default {
     }
   },
   watch: {
+    '$store.state.mainModules.isShoppingScroll': function (val) { // 商品列表-是否监听滚动条
+      const self = this
+      if (val) {
+        self.$store.commit('shoppingScrollMutations', self.$refs.viewBox.getScrollTop())
+        self.$store.commit('shoppingScrollMutationsFalse')
+        self.$refs.viewBox.scrollTo(0)
+      }
+    },
     '$store.state.mainModules.isScroll': function (val) { // 是否监听滚动条
       const self = this
       if (val) {
