@@ -15,11 +15,11 @@
   #commodity .weui-tabbar__label{margin: 0 auto; color: #000; font-size: 24px;}
   #commodity .weui-tabbar .tabbar-commodityHome{width: 20%; padding-top: 20px;}
   #commodity .weui-tabbar .tabbar-commodityHome .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
-  #commodity .weui-tabbar .tabbar-details{width: 20%; padding-top: 20px; border-left: 1px solid #e6e6e6;}
+  #commodity .weui-tabbar .tabbar-details{width: 20%; padding-top: 20px; border-left: 1px solid #e6e6e6;/*no*/}
   #commodity .weui-tabbar .tabbar-details .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
   #commodity .weui-tabbar .tabbar-sale{width: 29%; padding-top: 10px; height: 100%; background-color: #ec3e36;}
   #commodity .weui-tabbar .tabbar-sale .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
-  #commodity .weui-tabbar .tabbar-upload{width: calc(31% - 1px); padding-top: 10px; height: 100%; background-color: #fa0;}
+  #commodity .weui-tabbar .tabbar-upload{width: calc(31% - 1px);/*no*/ padding-top: 10px; height: 100%; background-color: #fa0;}
   #commodity .weui-tabbar .tabbar-upload .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
   
   /*商品样式*/
@@ -94,6 +94,13 @@
 
         <div id="commodityHome-div-height" class="card demo-card-header-pic grid-item-img">
           <div valign="bottom" class="card-header color-white no-border no-padding">
+          	
+						<mt-swipe :show-indicators="false">
+						  <mt-swipe-item>1</mt-swipe-item>
+						  <mt-swipe-item>2</mt-swipe-item>
+						  <mt-swipe-item>3</mt-swipe-item>
+						</mt-swipe>
+          	
             <!--<swiper :list="ceshi.img" :show-desc-mask="false" :aspect-ratio="414/414" dots-class="custom-bottom" dots-position="center" :show-dots="false"></swiper>-->
           </div>
           <div class="card-content">
