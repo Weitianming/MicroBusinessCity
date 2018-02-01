@@ -3,9 +3,9 @@
 	#shopping .weui-grid:before{display: none;}
 	#shopping .weui-grid:after{display: none;}
 	#shopping .row{overflow: inherit;}
-	#shopping .weui-grids{overflow: inherit!important;}
+	#shopping .weui-grids{position: inherit; overflow: inherit!important;}
 	#shopping .weui-grid{padding: 18px 0 0 18px; background-color: #f6f6f6;}
-	#shopping .vux-x-img{width: 100%;}
+	#shopping .lazy-img{width: 100%;}
 	#shopping .card{background-color: #fff;}
 	#shopping .card-content{padding: 0 12px 12px 12px;}
 	#shopping .card-content-inner-div-title{color: #4f4f4f; font-size: 30px; line-height: 32px; font-family: helvetica,arial,sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
@@ -25,7 +25,7 @@
           <grid-item v-for="(li, index) in listData" :key="index">
             <div class="card demo-card-header-pic grid-item-img" @click="commodity(li.id)">
               <div valign="bottom" class="card-header color-white no-border no-padding">
-                <x-img :default-src="defaultSrc" :src="li.img" :webp-src="`${li.img}?type=webp`" :offset="100" container="#vux_view_box_body"></x-img>
+                <img class="lazy-img" v-lazy.vux_view_box_body="li.img">
               </div>
               <div class="card-content">
                 <div class="card-content-inner">
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { Grid, GridItem, XInput, LoadMore, XImg } from 'vux'
+import { Grid, GridItem, XInput, LoadMore } from 'vux'
 import { mapActions } from 'vuex'
 
 export default {
@@ -61,8 +61,7 @@ export default {
     Grid,
     GridItem,
     XInput,
-    LoadMore,
-    XImg
+    LoadMore
   },
   data () {
     return {
@@ -82,9 +81,6 @@ export default {
     }
   },
   activated () {
-    setTimeout(() => {
-      $('#shopping .vux-x-img').css('height', $('.card-header.color-white.no-border.no-padding').width())
-    }, 0)
     this.$store.commit('setScrollIndexMutations', this.$store.state.mainModules.shoppingScroll)
     for (var i = 0; i < 10; i++) {
       this.listData.push(this.ceshi)

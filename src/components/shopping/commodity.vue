@@ -6,19 +6,20 @@
   #commodity .vux-container-scroll-top{margin-top: 100px;}
   #commodity .uploadClick{position: absolute; right: 40px; top: 150px; line-height: 60px; color: #fff; width: 160px; background-color: #000; z-index: 10000; opacity:0.8; fill: #fff; border-radius: 60px;}
   #commodity .vux-uploadClick{width: 48px; height: 48px; margin: 0 0 -13px 15px;}
-  #commodity span{font-size: 30px;}
+  #commodity .uploadClick span{font-size: 30px;}
   
   /*底部tab*/
   #commodity .weui-tabbar{position: fixed; height: 100px!important; background-color: #fff; display: inherit;}
   #commodity .weui-tabbar__item{float: left;}
+  #commodity .weui-tabbar .vux-x-icon{width: 35px; height: 35px;}
   #commodity .weui-tabbar__label{margin: 0 auto; color: #000; font-size: 24px;}
-  #commodity .weui-tabbar .tabbar-commodityHome{width: 20%; padding-top: 10px;}
+  #commodity .weui-tabbar .tabbar-commodityHome{width: 20%; padding-top: 20px;}
   #commodity .weui-tabbar .tabbar-commodityHome .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
-  #commodity .weui-tabbar .tabbar-details{width: 20%; padding-top: 10px; border-left: 1px solid #e6e6e6;}
+  #commodity .weui-tabbar .tabbar-details{width: 20%; padding-top: 20px; border-left: 1px solid #e6e6e6;}
   #commodity .weui-tabbar .tabbar-details .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
   #commodity .weui-tabbar .tabbar-sale{width: 29%; padding-top: 10px; height: 100%; background-color: #ec3e36;}
   #commodity .weui-tabbar .tabbar-sale .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
-  #commodity .weui-tabbar .tabbar-upload{width: 31%; padding-top: 10px; height: 100%; background-color: #fa0;}
+  #commodity .weui-tabbar .tabbar-upload{width: calc(31% - 1px); padding-top: 10px; height: 100%; background-color: #fa0;}
   #commodity .weui-tabbar .tabbar-upload .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
   
   /*商品样式*/
@@ -93,7 +94,7 @@
 
         <div id="commodityHome-div-height" class="card demo-card-header-pic grid-item-img">
           <div valign="bottom" class="card-header color-white no-border no-padding">
-            <swiper :list="ceshi.img" :show-desc-mask="false" :aspect-ratio="414/414" dots-class="custom-bottom" dots-position="center" :show-dots="false"></swiper>
+            <!--<swiper :list="ceshi.img" :show-desc-mask="false" :aspect-ratio="414/414" dots-class="custom-bottom" dots-position="center" :show-dots="false"></swiper>-->
           </div>
           <div class="card-content">
             <div class="card-content-inner">
@@ -270,10 +271,12 @@ export default {
     '$store.state.mainModules.scroll': function (val) { // 是否监听滚动条
       const self = this
       if (val >= self.tabScroll) {
+//      self.isScroll = true
         if (!self.isScroll) {
           self.isScroll = true
         }
       } else {
+//      self.isScroll = false
         if (self.isScroll) {
           self.isScroll = false
         }

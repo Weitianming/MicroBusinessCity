@@ -1,7 +1,7 @@
 <style>
 	@import '../static/css/style.css';
-	#main{height:100%;}
-	.vux-header-scroll-top{position: fixed!important; width:100%;}
+	#main{width:100%; height:100%;}
+	.vux-header-scroll-top{position: fixed!important;}
 	#vux_view_box_body{padding-bottom: 0;}
 	
 	/*标题栏*/
@@ -117,8 +117,7 @@ export default {
       this.$store.commit('scrollMutations', this.$refs.viewBox.getScrollTop())
     }
   },
-  created () {
-  },
+  created () {},
   methods: {
     classificationButton () { // 分类按钮
       this.classification.isState = !this.classification.isState
