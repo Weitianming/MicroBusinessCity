@@ -5,7 +5,7 @@
 	#shopping .row{overflow: inherit;}
 	#shopping .weui-grids{overflow: inherit!important;}
 	#shopping .weui-grid{padding: 18px 0 0 18px; background-color: #f6f6f6;}
-	#shopping .vux-x-img.b-loaded{width: 100%; height: 100%;}
+	#shopping .vux-x-img{width: 100%;}
 	#shopping .card{background-color: #fff;}
 	#shopping .card-content{padding: 0 12px 12px 12px;}
 	#shopping .card-content-inner-div-title{color: #4f4f4f; font-size: 30px; line-height: 32px; font-family: helvetica,arial,sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
@@ -76,12 +76,15 @@ export default {
         img: '//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg'
 //      img: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg'
       },
-//    defaultSrc: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
-      defaultSrc: '../../../static/assets/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
+      defaultSrc: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
+//    defaultSrc: '../../../static/assets/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
       loading: false // 上拉加载
     }
   },
   activated () {
+    setTimeout(() => {
+      $('#shopping .vux-x-img').css('height', $('.card-header.color-white.no-border.no-padding').width())
+    }, 0)
     this.$store.commit('setScrollIndexMutations', this.$store.state.mainModules.shoppingScroll)
     for (var i = 0; i < 10; i++) {
       this.listData.push(this.ceshi)
