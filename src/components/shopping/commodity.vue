@@ -28,7 +28,7 @@
   #commodity .mint-tab-container-item{background-color: #f6f6f6;}
   #commodity .card{margin: 0 auto; box-shadow: 0 0;}
   #commodity .card-header.color-white.no-border.no-padding{width: 100%;}
-  #commodity .mint-swipe{width: 100%;}
+  #commodity .mint-swipe{width: 100%; overflow: inherit;}
   #commodity .lazy-img{width: 100%;}
   #commodity .card-content{background-color: #fff;}
   #commodity .card-content-inner{padding: 20px 32px;}
@@ -52,18 +52,6 @@
   
   /*分享列表*/
   #commodity .weui-actionsheet__cell.vux-actionsheet-menu-default{padding: 20px 24px;/*px*/ font-size: 32px;/*px*/}
-  
-.ximg-demo {
-  width: 100%;
-  height: auto;
-}
-.ximg-error {
-  background-color: yellow;
-}
-.ximg-error:after {
-  content: '加载失败';
-  color: red;
-}
   
 </style>
 
