@@ -1,62 +1,66 @@
 <style>
-  #shopping .content-padded{margin: 0 0 0 -18px;}
-  #shopping .row{margin-left: 0; overflow: inherit;}
-  #shopping .row .col-50{width: 50%; margin-left: 0;}
-  #shopping .card{margin: 0 0 18px 18px;}
-  #shopping .card-content-inner{padding: 0 18px;}
-  #shopping .card-content-inner-div-title{margin: 6px 0 0 0; font-size: 28px;/*px*/ overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
-  #shopping .card-content-inner-div-title-span{padding: 1px 8px;/*px*/ border-radius: 10px;/*px*/ font-size: 18px;/*px*/ line-height: 20px;/*px*/ display: inline-block;  background-color: #FFD700;}
-  #shopping .color-gray{margin: 0px!important; font-size: 24px;/*px*/}
-  #shopping .card-content-inner-div-money{color: red; font-size: 0px;/*px*/}
-  #shopping .card-content-inner-div-money-symbol{font-size: 24px;/*px*/}
-  #shopping .card-content-inner-div-money-content{font-weight: bold; font-size: 32px;/*px*/}
-  
+	#shopping .content-padded{margin: 0 0 0 -18px;}
+	#shopping .weui-grid:before{display: none;}
+	#shopping .weui-grid:after{display: none;}
+	#shopping .row{overflow: inherit;}
+	#shopping .weui-grids{overflow: inherit!important;}
+	#shopping .weui-grid{padding: 18px 0 0 18px; background-color: #f6f6f6;}
+	#shopping .vux-x-img.b-loaded{width: 100%; height: 100%;}
+	#shopping .card{background-color: #fff;}
+	#shopping .card-content{padding: 0 12px 12px 12px;}
+	#shopping .card-content-inner-div-title{color: #4f4f4f; font-size: 30px; line-height: 32px; font-family: helvetica,arial,sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+	#shopping .card-content-inner-div-title-type{position: relative; bottom: 3px; margin-right: 10px; padding: 6px 8px 2px 8px; border-radius: 10px; font-size: 18px; line-height: 18px; display: inline-block; background-color: #FFD700;}
+	#shopping .color-gray{color: #949494; font-size: 26px; margin-top: 5px;}
+	#shopping .card-content-inner-div-money{color: red;}
+	#shopping .card-content-inner-div-money-symbol{font-size: 24px;}
+	#shopping .card-content-inner-div-money-content{font-weight: bold; font-size: 32px;}
 </style>
 
 <template>
   <div id="shopping">
-
-    <div class="content-padded grid-demo">
+    <div class="content-padded">
       <div class="row" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-
-        <div class="col-50" v-for="li in listData">
-          <div class="card demo-card-header-pic grid-item-img" @click="commodity(li.id)">
-            <div valign="bottom" class="card-header color-white no-border no-padding">
-              <x-img :default-src="defaultSrc" :src="li.img" :webp-src="`${li.img}?type=webp`" :offset="100" container="#vux_view_box_body" @click.native="imgClick($event)"></x-img>
-            </div>
-            <div class="card-content">
-              <div class="card-content-inner">
-                <div class="card-content-inner-div-title">
-                  <span class="card-content-inner-div-title-span">{{li.type}}</span>{{li.title}}
-                </div>
-                <div class="card-content-inner-div-title color-gray">{{li.content}}</div>
-                <div class="card-content-inner-div-money">
-                  <span class="card-content-inner-div-money-symbol">¥ </span>
-                  <span class="card-content-inner-div-money-content">{{li.money}}</span>
+      	
+        <grid :cols="2">
+          <grid-item v-for="(li, index) in listData" :key="index">
+            <div class="card demo-card-header-pic grid-item-img" @click="commodity(li.id)">
+              <div valign="bottom" class="card-header color-white no-border no-padding">
+                <x-img :default-src="defaultSrc" :src="li.img" :webp-src="`${li.img}?type=webp`" :offset="100" container="#vux_view_box_body"></x-img>
+              </div>
+              <div class="card-content">
+                <div class="card-content-inner">
+                  <div class="card-content-inner-div-title">
+                    <span class="card-content-inner-div-title-type">{{li.type}}</span>{{li.title}}
+                  </div>
+                  <div class="card-content-inner-div-title color-gray">{{li.content}}</div>
+                  <div class="card-content-inner-div-money">
+                    <span class="card-content-inner-div-money-symbol">¥ </span>
+                    <span class="card-content-inner-div-money-content">{{li.money}}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </grid-item>
+        </grid>
         
         <div>
           <load-more tip="正在加载"></load-more>
         </div>
-
+        
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
+import { Grid, GridItem, XInput, LoadMore, XImg } from 'vux'
 import { mapActions } from 'vuex'
-import { XInput, XButton, LoadMore, XImg } from 'vux'
 
 export default {
   components: {
+    Grid,
+    GridItem,
     XInput,
-    XButton,
     LoadMore,
     XImg
   },
@@ -70,6 +74,7 @@ export default {
         content: '欧～欧～～Are you 王逗比',
         money: '2689.69',
         img: '//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg'
+//      img: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg'
       },
 //    defaultSrc: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
       defaultSrc: '../../../static/assets/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
@@ -82,6 +87,11 @@ export default {
     }
   },
   deactivated () {
+    const self = this
+    self.$store.commit('scrollMutationsTrue')
+    console.log(self.$store.state.mainModules.scroll)
+    self.$store.commit('scrollMutationsFalse')
+//  self.listData = []
   },
   methods: {
     ...mapActions('state/shoppingModules', ['commodityIdActions']),
@@ -99,17 +109,6 @@ export default {
       const self = this
       self.$store.dispatch('commodityIdActions', id) // 本地缓存计时
       self.$router.push({ path: '/commodity' })
-    },
-    imgClick (event) { // 加载图片
-      event = event || window.event
-      var events = event.target || event.srcElement
-      var dataSrc = $(events).attr('data-src')
-      if (dataSrc !== null && dataSrc !== undefined) {
-        if (dataSrc !== this.defaultSrc) {
-          $(events).attr('src', dataSrc)
-          $(events).removeAttr('data-src')
-        }
-      }
     }
   }
 }

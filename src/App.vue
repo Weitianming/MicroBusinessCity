@@ -2,6 +2,7 @@
 	@import '../static/css/style.css';
 	#main{height:100%;}
 	.vux-header-scroll-top{position: fixed!important; width:100%;}
+	#vux_view_box_body{padding-bottom: 0;}
 	
 	/*标题栏*/
 	.app-vux-header{background-color: #f2f2f2!important; z-index: 1000;}
@@ -18,9 +19,9 @@
 	.app-vux-flexbox .flex-demo{text-align: center; padding: 12px; margin: 12px 18px; color: #666; background-color: #fff; border: 1px solid #eee; background-clip: padding-box;}
 	
 	/*上拉加载*/
-	.weui-loadmore {margin: 14px auto;/*px*/ font-size: 28px;/*px*/}
-	.weui-loading {width: 28px;/*px*/ height: 28px;/*px*/}
-	.weui-loadmore__tips {font-size: 28px;/*px*/}
+	.weui-loadmore {line-height: 100px!important; margin-top: 0!important; margin-bottom:  16px!important;}
+	.weui-loading {width: 40px!important; height: 40px!important;}
+	.weui-loadmore__tips {font-size: 32px!important;}
 </style>
 
 <template>

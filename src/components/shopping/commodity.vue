@@ -1,5 +1,10 @@
 <style>
 	/*头部tab*/
+	
+.vux-tab {height: 50px!important;/*no*/}
+.vux-tab-item {font-size: 18px!important;/*px*/ line-height: 48px!important;/*px*/}
+	
+	
   #commodity .vux-tab-scroll-top{position: fixed; width: 100%; top: 0; z-index: 10000;}
   #commodity .vux-container-scroll-top{margin-top: 50px;/*no*/}
   #commodity .uploadClick{position: absolute; right: 30px;/*px*/ top: 150px;/*px*/ line-height: 60px;/*px*/ color: #fff; width: 150px;/*px*/ background-color: #000; z-index: 10000; opacity:0.8; fill: #fff; border-radius: 30px;/*px*/}
@@ -221,10 +226,15 @@ export default {
     })
   },
   activated () {
-    this.$store.commit('scrollMutationsTrue')
+    const self = this
+    self.$store.commit('scrollMutationsTrue')
+    setTimeout(() => {
+      self.$store.commit('setScrollIndexMutations', 0)
+    }, 0)
   },
   deactivated () {
     this.$store.commit('scrollMutationsFalse')
+    this.$destroy() // 销毁
   },
   methods: {
     ...mapActions('state/loginModules', ['assignmentRegisterPhone', 'assignmentRegisterStage', 'assignmentRegisterTime']),
@@ -266,9 +276,13 @@ export default {
     '$store.state.mainModules.scroll': function (val) { // 是否监听滚动条
       const self = this
       if (val >= 40) {
-        self.isScroll = true
+        if (!self.isScroll) {
+          self.isScroll = true
+        }
       } else {
-        self.isScroll = false
+        if (self.isScroll) {
+          self.isScroll = false
+        }
       }
     }
   }
