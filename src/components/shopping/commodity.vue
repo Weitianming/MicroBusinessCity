@@ -1,29 +1,25 @@
 <style>
-	/*头部tab*/
-	
-.vux-tab {height: 50px!important;/*no*/}
-.vux-tab-item {font-size: 18px!important;/*px*/ line-height: 48px!important;/*px*/}
-	
-	
+  /*头部tab*/
+  #commodity .vux-tab {height: 100px!important;}
+  #commodity .vux-tab-item {font-size: 30px!important; line-height: 100px!important;}
   #commodity .vux-tab-scroll-top{position: fixed; width: 100%; top: 0; z-index: 10000;}
-  #commodity .vux-container-scroll-top{margin-top: 50px;/*no*/}
-  #commodity .uploadClick{position: absolute; right: 30px;/*px*/ top: 150px;/*px*/ line-height: 60px;/*px*/ color: #fff; width: 150px;/*px*/ background-color: #000; z-index: 10000; opacity:0.8; fill: #fff; border-radius: 30px;/*px*/}
-  #commodity .vux-uploadClick{margin: 0 0 -13px 15px;/*px*/}
-  #commodity span{font-size: 28px;/*px*/}
-  
+  #commodity .vux-container-scroll-top{margin-top: 100px;}
+  #commodity .uploadClick{position: absolute; right: 40px; top: 150px; line-height: 60px; color: #fff; width: 160px; background-color: #000; z-index: 10000; opacity:0.8; fill: #fff; border-radius: 60px;}
+  #commodity .vux-uploadClick{width: 48px; height: 48px; margin: 0 0 -13px 15px;}
+  #commodity span{font-size: 30px;}
   
   /*底部tab*/
-  #commodity .weui-tabbar{height: 50px!important;/*no*/ background-color: #fff; display: inherit;}
+  #commodity .weui-tabbar{position: fixed; height: 100px!important; background-color: #fff; display: inherit;}
   #commodity .weui-tabbar__item{float: left;}
-  #commodity .weui-tabbar__label{margin: 0 auto; color: #000; font-size: 24px;/*px*/}
-  #commodity .weui-tabbar .tabbar-commodityHome{width: 20%; padding-top: 10px;/*px*/}
+  #commodity .weui-tabbar__label{margin: 0 auto; color: #000; font-size: 24px;}
+  #commodity .weui-tabbar .tabbar-commodityHome{width: 20%; padding-top: 10px;}
   #commodity .weui-tabbar .tabbar-commodityHome .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
-  #commodity .weui-tabbar .tabbar-details{width: 20%; padding-top: 10px;/*px*/ border-left: 1px solid #e6e6e6;}
+  #commodity .weui-tabbar .tabbar-details{width: 20%; padding-top: 10px; border-left: 1px solid #e6e6e6;}
   #commodity .weui-tabbar .tabbar-details .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
-  #commodity .weui-tabbar .tabbar-sale{width: 29%; padding-top: 10px;/*px*/ height: 100%; background-color: #ec3e36;}
-  #commodity .weui-tabbar .tabbar-sale .weui-tabbar__label{font-size: 36px;/*px*/ line-height: 85px;/*px*/ color: #fff;}
-  #commodity .weui-tabbar .tabbar-upload{width: 31%; padding-top: 10px;/*px*/ height: 100%; background-color: #fa0;}
-  #commodity .weui-tabbar .tabbar-upload .weui-tabbar__label{font-size: 36px;/*px*/ line-height: 85px;/*px*/ color: #fff;}
+  #commodity .weui-tabbar .tabbar-sale{width: 29%; padding-top: 10px; height: 100%; background-color: #ec3e36;}
+  #commodity .weui-tabbar .tabbar-sale .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
+  #commodity .weui-tabbar .tabbar-upload{width: 31%; padding-top: 10px; height: 100%; background-color: #fa0;}
+  #commodity .weui-tabbar .tabbar-upload .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
   
   /*商品样式*/
   #commodity .card{margin: 0 auto; box-shadow: 0 0;}
@@ -63,7 +59,7 @@
 <template>
   <div id="commodity">
 
-    <tab bar-active-color="red" active-color='#000' id="vux-tab-scroll-top" :class="isScroll ? 'vux-tab-scroll-top' : ''">
+    <tab bar-active-color="red" active-color='#000' :class="isScroll ? 'vux-tab-scroll-top' : ''">
       <tab-item selected @on-item-click="tabItemClick('commodityHome')">商品</tab-item>
       <tab-item @on-item-click="tabItemClick('details')">详情</tab-item>
       <tab-item @on-item-click="tabItemClick('sale')">销售记录</tab-item>
@@ -74,7 +70,7 @@
       </div>
     </tab>
 
-    <tabbar style="position: fixed;">
+    <tabbar>
       <tabbar-item class="tabbar-commodityHome">
         <x-icon slot="icon" type="ios-home-outline"></x-icon>
         <span slot="label">店铺</span>
@@ -184,6 +180,7 @@ export default {
       isSelected: 'commodityHome', // 主页内容
       isScroll: false, // 顶部tab样式
       actionsheetShow: false, // 上传按钮显示
+      tabScroll: $('.vux-header.app-vux-header').height(), // 导航栏高度
       uploadList: {
         menu1: '分享朋友圈',
         menu2: '上传微店'
@@ -225,13 +222,9 @@ export default {
       registerTimeData: state => state.loginModules.registerTimeData // 倒计时
     })
   },
-  created () {
-    console.log(111)
-  },
   activated () {
     const self = this
-//  self.$store.commit('setScrollIndexMutations', 0)
-//  self.$store.commit('scrollMutationsTrue')
+    self.$store.commit('scrollMutationsTrue')
   },
   deactivated () {
     this.$store.commit('scrollMutationsFalse')
@@ -276,7 +269,7 @@ export default {
   watch: {
     '$store.state.mainModules.scroll': function (val) { // 是否监听滚动条
       const self = this
-      if (val >= 40) {
+      if (val >= self.tabScroll) {
         if (!self.isScroll) {
           self.isScroll = true
         }
