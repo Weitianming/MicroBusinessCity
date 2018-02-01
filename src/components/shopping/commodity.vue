@@ -23,22 +23,32 @@
   #commodity .weui-tabbar .tabbar-upload .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
   
   /*商品样式*/
+  #commodity .commodityHome-class{margin-bottom: 100px;}
+  #commodity .mint-tab-container{overflow: inherit;}
+  #commodity .mint-tab-container-item{background-color: #f6f6f6;}
   #commodity .card{margin: 0 auto; box-shadow: 0 0;}
-  #commodity .vux-slider{width: 100%;}
-  #commodity .card-content-inner{padding: 20px 32px;/*px*/}
-  #commodity .card-content-inner-div-title{margin: 0; font-size: 34px;/*px*/ line-height: 36px;/*px*/}
-  #commodity .color-gray{margin: 40px 0px 20px 0!important; font-size: 28px;/*px*/ line-height: 30px;/*px*/}
-  #commodity .card-content-inner-div-money{color: #ec3e36; font-size: 0px;/*px*/ overflow: hidden;}
+  #commodity .card-header.color-white.no-border.no-padding{width: 100%;}
+  #commodity .mint-swipe{width: 100%;}
+  #commodity .lazy-img{width: 100%;}
+  #commodity .card-content{background-color: #fff;}
+  #commodity .card-content-inner{padding: 20px 32px;}
+  #commodity .card-content-inner-div-title{font-size: 34px; line-height: 36px;}
+  #commodity .color-gray{margin: 30px 0px 20px 0!important; color: #4f4f4f; font-size: 28px; line-height: 30px;}
+  #commodity .card-content-inner-div-money{color: #ec3e36; overflow: hidden;}
   #commodity .floatL{float: left;}
   #commodity .floatR{float: right;}
-  #commodity .card-content-inner-div-money-symbol{font-size: 30px;/*px*/}
-  #commodity .card-content-inner-div-money-content{font-size: 38px;/*px*/}
-  #commodity .card-content-inner-div-commodityDate{color: #999; font-size: 28px;/*px*/ line-height: 56px;/*px*/}
-  #commodity .borderTop{margin: 0 32px;/*px*/ padding: 20px 0;/*px*/ border-top: 1px solid #ccc;/*no*/ font-size: 24px;/*px*/ color: #949494; overflow: hidden;}
-  #commodity .borderTop li{list-style-type:none; float: left; padding: 0 8px;/*px*/ border-left: 1px solid #ccc;/*no*/ }
-  #commodity .borderTop span{padding-left: 4px;/*px*/ font-size: 24px;/*px*/ color: #000;}
+  #commodity .card-content-inner-div-money-symbol{font-size: 30px;}
+  #commodity .card-content-inner-div-money-content{font-size: 38px;}
+  #commodity .card-content-inner-div-commodityDate{color: #999; font-size: 28px; line-height: 56px;}
+  #commodity .borderTop{margin: 0 32px; padding: 20px 0; border-top: 1px solid #ccc; color: #949494; font-size: 24px; overflow: auto;}
+  #commodity .borderTop li{list-style-type:none; float: left; padding: 0 8px; border-left: 1px solid #ccc; }
+  #commodity .borderTop span{padding-left: 4px;font-size: 24px; color: #000;}
   #commodity .borderTop .borderTop-li1{padding-left: 0!important; border-left: none!important;}
   #commodity .borderTop .borderTop-li1 span{color: #f60;}
+  
+  /*详情样式*/
+  #commodity .vux-divider{margin-top: 10px;}
+  #commodity .details-content{line-height: 0;}
   
   /*分享列表*/
   #commodity .weui-actionsheet__cell.vux-actionsheet-menu-default{padding: 20px 24px;/*px*/ font-size: 32px;/*px*/}
@@ -59,18 +69,20 @@
 
 <template>
   <div id="commodity">
-
+  	
+  	<!--头部菜单栏-->
     <tab bar-active-color="red" active-color='#000' :class="isScroll ? 'vux-tab-scroll-top' : ''">
       <tab-item selected @on-item-click="tabItemClick('commodityHome')">商品</tab-item>
       <tab-item @on-item-click="tabItemClick('details')">详情</tab-item>
       <tab-item @on-item-click="tabItemClick('sale')">销售记录</tab-item>
       <tab-item @on-item-click="tabItemClick('upload')">上传记录</tab-item>
       <div class="uploadClick" @click="uploadClick">
-      	<x-icon slot="icon" class="vux-uploadClick" type="ios-cloud-upload-outline"></x-icon>
-      	<span>上传</span>
+        <x-icon slot="icon" class="vux-uploadClick" type="ios-cloud-upload-outline"></x-icon>
+        <span>上传</span>
       </div>
     </tab>
-
+    
+    <!--底部菜单栏-->
     <tabbar>
       <tabbar-item class="tabbar-commodityHome">
         <x-icon slot="icon" type="ios-home-outline"></x-icon>
@@ -90,87 +102,75 @@
     </tabbar>
 
     <mt-tab-container v-model="isSelected" :class="isScroll ? 'vux-container-scroll-top' : ''">
-      <mt-tab-container-item id="commodityHome">
-
+      <mt-tab-container-item id="commodityHome" class="commodityHome-class">
+      	
+      	<!--商品-->
         <div id="commodityHome-div-height" class="card demo-card-header-pic grid-item-img">
           <div valign="bottom" class="card-header color-white no-border no-padding">
-          	
-						<mt-swipe :show-indicators="false">
-						  <mt-swipe-item>1</mt-swipe-item>
-						  <mt-swipe-item>2</mt-swipe-item>
-						  <mt-swipe-item>3</mt-swipe-item>
-						</mt-swipe>
-          	
-            <!--<swiper :list="ceshi.img" :show-desc-mask="false" :aspect-ratio="414/414" dots-class="custom-bottom" dots-position="center" :show-dots="false"></swiper>-->
+            <mt-swipe :auto="0" :show-indicators="false">
+              <mt-swipe-item v-for="cimg in ceshi.img" :key="cimg.img">
+                <img class="lazy-img" v-lazy.vux_view_box_body="cimg.img">
+              </mt-swipe-item>
+            </mt-swipe>
           </div>
           <div class="card-content">
             <div class="card-content-inner">
               <div class="card-content-inner-div-title">{{ceshi.title}}</div>
               <div class="card-content-inner-div-title color-gray">{{ceshi.content}}</div>
               <div class="card-content-inner-div-money">
-              	<div class="floatL">
-	              <span class="card-content-inner-div-money-symbol">¥ </span>
-	              <span class="card-content-inner-div-money-content">{{ceshi.money}}</span>
-              	</div>
-              	<div class="floatR">
+                <div class="floatL">
+                  <span class="card-content-inner-div-money-symbol">¥ </span>
+                  <span class="card-content-inner-div-money-content">{{ceshi.money}}</span>
+                </div>
+                <div class="floatR">
                   <span class="card-content-inner-div-commodityDate">{{ceshi.commodityDate}}</span>
-              	</div>
+                </div>
               </div>
             </div>
           </div>
           <div class="card-content">
-          	<div class="card-content-inner borderTop">
-          	  <ul>
-          	  	<li class="borderTop-li1">月销量<span>1000-1001</span></li>
-          	  	<li>浏览<span>14654</span></li>
-          	  	<li>下载<span>856</span></li>
-          	  	<li>上传<span>654</span></li>
-          	  </ul>
-          	</div>
+            <div class="card-content-inner borderTop">
+              <ul>
+                <li class="borderTop-li1">月销量<span>1000-1001</span></li>
+                <li>浏览<span>14654</span></li>
+                <li>下载<span>856</span></li>
+                <li>上传<span>654</span></li>
+              </ul>
+            </div>
           </div>
         </div>
         
+        <!--详情-->
         <divider>详情</divider>
-		<div v-for="src in ceshi.detailsList" style="background-color:yellow;text-align:center;">
-		  <span style="font-size:20px;">Loading</span>
-		  <x-img :src="src" :webp-src="`${src}?type=webp`" @on-success="success" @on-error="error" class="ximg-demo" error-class="ximg-error" :offset="-100" container="#vux_view_box_body"></x-img>
-		</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
-        <div>asdasd</div>
+        <ul class="details-content">
+        	<li v-for="src in ceshi.detailsList">
+        		<img class="lazy-img" v-lazy.vux_view_box_body="src">
+        	</li>
+        </ul>
 
       </mt-tab-container-item>
-      <!--<mt-tab-container-item id="details">
-        details
-      </mt-tab-container-item>-->
+      
+      <!--销售记录-->
       <mt-tab-container-item id="sale">
         sale
       </mt-tab-container-item>
+      
+      <!--上传记录-->
       <mt-tab-container-item id="upload">
         upload
       </mt-tab-container-item>
+      
     </mt-tab-container>
     
+    <!--分享工具-->
     <actionsheet v-model="actionsheetShow" :menus="uploadList" @on-click-menu="uploadMenuClick"></actionsheet>
 
   </div>
 </template>
 
 <script>
-import { Tab, TabItem, Tabbar, TabbarItem, Swiper, Divider, XImg, Actionsheet } from 'vux'
-import { mapState, mapActions } from 'vuex'
+import { Tab, TabItem, Tabbar, TabbarItem, Divider, Actionsheet } from 'vux'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -178,9 +178,7 @@ export default {
     TabItem,
     Tabbar,
     TabbarItem,
-    Swiper,
     Divider,
-    XImg,
     Actionsheet
   },
   data () {
@@ -189,6 +187,7 @@ export default {
       isScroll: false, // 顶部tab样式
       actionsheetShow: false, // 上传按钮显示
       tabScroll: $('.vux-header.app-vux-header').height(), // 导航栏高度
+      commodityHomeScroll: $('#commodityHome-div-height').height(), // 商品信息高度
       uploadList: {
         menu1: '分享朋友圈',
         menu2: '上传微店'
@@ -200,6 +199,7 @@ export default {
         content: '欧～欧～～Are you 王逗比',
         money: '2689.69',
         commodityDate: '2018-01-01',
+//      img: [],
         img: [{
           url: 'javascript',
           img: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg'
@@ -223,15 +223,10 @@ export default {
       loading: false // 上拉加载
     }
   },
-  computed: {
-    ...mapState({ // vuex辅助函数
-      registerStageData: state => state.loginModules.registerStageData, // 注册状态
-      registerPhoneData: state => state.loginModules.registerPhoneData, // 输入的手机号
-      registerTimeData: state => state.loginModules.registerTimeData // 倒计时
-    })
-  },
   activated () {
     const self = this
+    $('.card-header.color-white.no-border.no-padding').css('height', $('#commodity').width())
+    self.commodityHomeScroll = $('#commodityHome-div-height').height() // 商品信息高度
     self.$store.commit('scrollMutationsTrue')
   },
   deactivated () {
@@ -244,10 +239,14 @@ export default {
       const self = this
       if (val === 'commodityHome') {
         self.isSelected = 'commodityHome'
-        self.$store.commit('setScrollIndexMutations', 40)
+        setTimeout(() => {
+          self.$store.commit('setScrollIndexMutations', self.tabScroll)
+        }, 0)
       } else if (val === 'details') {
         self.isSelected = 'commodityHome'
-        self.$store.commit('setScrollIndexMutations', $('#commodityHome-div-height').height() + 40)
+        setTimeout(() => {
+          self.$store.commit('setScrollIndexMutations', self.commodityHomeScroll + self.tabScroll)
+        }, 0)
       } else if (val === 'sale') {
         self.isSelected = 'sale'
       } else if (val === 'upload') {
@@ -262,28 +261,16 @@ export default {
       if (key === 'menu1') {
         this.$router.push({ path: '/wx-friends' })
       }
-    },
-    success (src, ele) {
-      console.log('success load', src)
-      const span = ele.parentNode.querySelector('span')
-      ele.parentNode.removeChild(span)
-    },
-    error (src, ele, msg) {
-      console.log('error load', msg, src)
-      const span = ele.parentNode.querySelector('span')
-      span.innerText = 'load error'
     }
   },
   watch: {
     '$store.state.mainModules.scroll': function (val) { // 是否监听滚动条
       const self = this
       if (val >= self.tabScroll) {
-//      self.isScroll = true
         if (!self.isScroll) {
           self.isScroll = true
         }
       } else {
-//      self.isScroll = false
         if (self.isScroll) {
           self.isScroll = false
         }
