@@ -32,8 +32,6 @@
   #wx-friends .weui-tabbar .weui-btn{font-size: 38px; color: #fff; background-color: red;}
   #wx-friends .weui-tabbar .weui-loading{width: 58px!important; height: 58px!important;}
   
-  
-  
   /*列表弹窗*/
   #wx-friends .weui-actionsheet{width: 80%!important;}
   #wx-friends .weui-actionsheet__cell{font-size: 32px!important; padding: 20px 30px!important;}
