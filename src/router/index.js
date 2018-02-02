@@ -28,6 +28,10 @@ export default new Router({
     {
       path: '/wx-friends',
       component: wxFriends => require(['@/components/shopping/wx-friends'], wxFriends) // 分享朋友圈-编辑
+    },
+    {
+      path: '/choice-picture',
+      component: choicePicture => require(['@/components/shopping/choice-picture'], choicePicture) // 分享朋友圈-编辑
     }
   ]
 })

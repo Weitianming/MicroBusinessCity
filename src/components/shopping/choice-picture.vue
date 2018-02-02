@@ -37,99 +37,82 @@
   #wx-friends .weui-actionsheet__cell{font-size: 32px!important; padding: 20px 30px!important;}
   
   
-  /*#wx-friends .card-content-inner-div-money{color: #ec3e36; overflow: hidden;}
-  #wx-friends .floatL{float: left;}
-  #wx-friends .floatR{float: right;}
-  #wx-friends .card-content-inner-div-money-symbol{font-size: 30px;}
-  #wx-friends .card-content-inner-div-money-content{font-size: 38px;}
-  #wx-friends .card-content-inner-div-commodityDate{color: #999; font-size: 28px; line-height: 56px;}
-  #wx-friends .borderTop{margin: 0 32px; padding: 20px 0; border-top: 1px solid #ccc; color: #949494; font-size: 24px; overflow: auto;}
-  #wx-friends .borderTop li{list-style-type:none; float: left; padding: 0 8px; border-left: 1px solid #ccc; }
-  #wx-friends .borderTop span{padding-left: 4px;font-size: 24px; color: #000;}
-  #wx-friends .borderTop .borderTop-li1{padding-left: 0!important; border-left: none!important;}
-  #wx-friends .borderTop .borderTop-li1 span{color: #f60;}*/
   
+  /*基础样式*/
+  #choice-picture .card{margin: 0 auto; padding-bottom: 0; box-shadow: 0 0; background-color: #f6f6f6;}
+  #choice-picture .card-header.color-white.no-border.no-padding{width: 100%;}
+  #choice-picture .card-content{background-color: #fff;}
+  #choice-picture .friends-spacing{padding: 20px 30px;}
+  #choice-picture .vux-cell-div{height: 60px;}
+  #choice-picture .card-content-inner-div-title{font-size: 30px; line-height: 36px;}
+  #choice-picture .vux-whole-select{position: relative; top: 2px;}
+  #choice-picture .weui-icon.weui_icon_circle.weui-icon-circle{font-size: 42px;}
+  #choice-picture .weui-icon.weui_icon_success.weui-icon-success{font-size: 42px;}
+  
+  /*图片列表*/
+  #choice-picture .vux-previewer-div{margin-top: 20px; background-color: #fff;}
   
 </style>
 
 <template>
-  <div id="wx-friends">
-
-    <div class="card demo-card-header-pic grid-item-img">
-    	
-      <div valign="bottom" class="card-header color-white no-border no-padding">
-        <mt-swipe :auto="0">
-          <mt-swipe-item v-for="cimg in params.img" :key="cimg.img">
-            <img class="lazy-img" v-lazy.vux_view_box_body="cimg.img">
-          </mt-swipe-item>
-        </mt-swipe>
-      </div>
-      
+  <div id="choice-picture" style="height: 100%; background-color: #f6f6f6;">
+  	
+  	<div class="card">
       <div class="card-content">
         <div class="card-content-inner">
           <div class="card-content-inner-div-title">
-          	<x-textarea class="friends-spacing" title="标题" :max="50" v-model="params.title"></x-textarea>
-          	<x-switch class="friends-spacing vux-switch-scale" title="是否显示价格" :value-map="[false, true]" :inline-desc="params.showPrice ? '显示' : '不显示'" v-model="params.showPrice"></x-switch>
-          </div>
-        </div>
-      </div>
-      
-      <div class="card-content">
-        <div class="card-content-inner">
-          <div class="card-content-inner-div-title">
-          	<cell class="friends-spacing vux-cell-div" title="拿货价">
+          	<cell class="friends-spacing vux-cell-div" title="请选择宝贝详情图片">
           		<div>
-          			<span style="color: red;">{{'￥' + params.money}}</span>
+          			<span class="vux-whole-select" @click="isSelectClick">全选</span>
+          			<check-icon :value.sync="params.isSelect"></check-icon>
           		</div>
           	</cell>
-          	<cell class="friends-spacing vux-cell-div vux-link-r" is-link title="利润方式" :value="params.profitPatternString" @click.native="getData.profitPatternActionsheet=true"></cell>
-          	<x-input class="friends-spacing vux-cell-div" :title="params.profitPatternString + (params.profitPattern === 'fixed' ? ' ￥' : ' %')" :show-clear="false"></x-input>
-          	<x-input class="friends-spacing vux-cell-div" :show-clear="false">
-          		<div slot="label">
-          			<span>实际售卖价格</span>
-          			<span class="vux-input-label-placeholder">(拿货价+利润)</span>
-          			<span class="vux-input-label-symbol">￥</span>
-          		</div>
-          	</x-input>
-          	<x-input class="friends-spacing vux-cell-div" :show-clear="false">
-          		<div slot="label">
-          			<span>自定义原价</span>
-          			<span class="vux-input-label-placeholder">(不填则不显示)</span>
-          			<span class="vux-input-label-symbol">￥</span>
-          		</div>
-          	</x-input>
           </div>
         </div>
       </div>
-      
-      <div class="card-content">
-        <div class="card-content-inner">
-          <div class="card-content-inner-div-title">
-          	<x-input class="friends-spacing vux-cell-div" title="颜色" text-align="right" :show-clear="false"></x-input>
-          	<x-input class="friends-spacing vux-cell-div" title="尺寸" text-align="right" :show-clear="false"></x-input>
-          	<x-input class="friends-spacing vux-cell-div" title="手机号码" text-align="right" :show-clear="false"></x-input>
-          	<x-input class="friends-spacing vux-cell-div" title="QQ" text-align="right" :show-clear="false"></x-input>
-          </div>
-        </div>
-      </div>
-      
-    </div>
-    
+  	</div>
+  	
+  	<div class="vux-previewer-div">
+	    <img class="previewer-demo-img" v-for="(item, index) in previewerList" :src="item.src" width="100" @click="imgPreviewerShow(index)">
+	    <div v-transfer-dom>
+	      <previewer :list="previewerList" ref="previewer" :options="options">
+	      	<template>
+	      		<span class="previewer-delete-icon-box">
+	      			<img src="http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195117f7vq525071.jpg" width="22" height="22" class="previewer-delete-icon">
+	      		</span>
+	      	</template>
+	      </previewer>
+	    </div>
+  	</div>
+  	
+  	
+		<!--<previewer ref="previewer" :list="previewerList" :options="options">
+		  <template slot="button-after">
+		    <span class="previewer-delete-icon-box">
+		      <img src="http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195117f7vq525071.jpg" width="22" height="22" class="previewer-delete-icon">
+		    </span>
+		  </template>
+		</previewer>-->
+
     <div class="weui-tabbar">
     	<x-button type="primary" :show-loading="isNextStep" @click.native="nextStep">下一步</x-button>
     </div>
     
-		<actionsheet v-model="getData.profitPatternActionsheet" :menus="getData.profitPatternList" theme="android" @on-click-menu="profitPatternActionsheetClickMenu"></actionsheet>
 
   </div>
 </template>
 
 <script>
-import { Cell, XTextarea, XSwitch, XInput, XButton, Actionsheet } from 'vux'
+import { CheckIcon, Previewer, TransferDom, Cell, XTextarea, XSwitch, XInput, XButton, Actionsheet } from 'vux'
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  directives: {
+    TransferDom
+  },
   components: {
+    CheckIcon,
+    Previewer,
     Cell,
     XTextarea,
     XSwitch,
@@ -139,6 +122,20 @@ export default {
   },
   data () {
     return {
+      previewerList: [{
+        src: 'https://placekitten.com/800/400',
+        w: 600,
+        h: 400
+      }, {
+        src: 'https://placekitten.com/1200/900',
+        w: 1200,
+        h: 900
+      }],
+      options: {
+        isClickableElement (el) {
+          return /previewer-delete-icon/.test(el.className)
+        }
+      },
       getData: {
         profitPatternActionsheet: false, // 利润方式弹框
         profitPatternList: { // 利润方式类别
@@ -147,6 +144,7 @@ export default {
         }
       },
       params: {
+        isSelect: false, // 全选按钮状态
         id: '',
         title: '新品测试黯石撒多按时', // 标题
         showPrice: true, // 是否显示价格
@@ -193,10 +191,12 @@ export default {
   },
   methods: {
     ...mapActions('state/loginModules', ['assignmentRegisterPhone', 'assignmentRegisterStage', 'assignmentRegisterTime']),
-    profitPatternActionsheetClickMenu (key, item) { // 上传类别
+    isSelectClick () { // 全选按钮
       const self = this
-      self.params.profitPatternString = item
-      self.params.profitPattern = key
+      self.params.isSelect = !self.params.isSelect
+    },
+    imgPreviewerShow (index) { // 放大图片预览
+      this.$refs.previewer.show(index)
     },
     nextStep () { // 下一步按钮
       const self = this
@@ -204,7 +204,7 @@ export default {
         self.isNextStep = true
         setTimeout(() => {
           self.isNextStep = false
-          self.$router.push({ path: '/choice-picture' })
+//        self.$router.push({ path: '/wx-friends' })
         }, 2000)
       }
     }
