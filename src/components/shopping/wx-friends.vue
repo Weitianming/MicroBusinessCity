@@ -1,7 +1,7 @@
 <style>
   
   /*商品样式*/
-  #wx-friends .card{margin: 0 auto; box-shadow: 0 0; background-color: #f6f6f6;}
+  #wx-friends .card{margin: 0 auto; padding-bottom: 100px; box-shadow: 0 0; background-color: #f6f6f6;}
   #wx-friends .card-header.color-white.no-border.no-padding{width: 100%;}
   #wx-friends .mint-swipe{width: 100%; overflow: inherit;}
   #wx-friends .lazy-img{width: 100%;}
@@ -27,6 +27,16 @@
   #wx-friends .vux-input-label-placeholder{margin-left: 20px; color: #999999;}
   #wx-friends .vux-input-label-symbol{margin-left: 20px;}
   
+  /*底部按钮*/
+  #wx-friends .weui-tabbar{height: 100px;}
+  #wx-friends .weui-tabbar .weui-btn{font-size: 38px; color: #fff; background-color: red;}
+  #wx-friends .weui-tabbar .weui-loading{width: 58px!important; height: 58px!important;}
+  
+  
+  
+  /*列表弹窗*/
+  #wx-friends .weui-actionsheet{width: 80%!important;}
+  #wx-friends .weui-actionsheet__cell{font-size: 32px!important; padding: 20px 30px!important;}
   
   
   /*#wx-friends .card-content-inner-div-money{color: #ec3e36; overflow: hidden;}
@@ -107,13 +117,17 @@
       
     </div>
     
+    <div class="weui-tabbar">
+    	<x-button type="primary" :show-loading="isNextStep" @click.native="nextStep">下一步</x-button>
+    </div>
+    
 		<actionsheet v-model="getData.profitPatternActionsheet" :menus="getData.profitPatternList" theme="android" @on-click-menu="profitPatternActionsheetClickMenu"></actionsheet>
 
   </div>
 </template>
 
 <script>
-import { Cell, XTextarea, XSwitch, XInput, Actionsheet } from 'vux'
+import { Cell, XTextarea, XSwitch, XInput, XButton, Actionsheet } from 'vux'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -122,6 +136,7 @@ export default {
     XTextarea,
     XSwitch,
     XInput,
+    XButton,
     Actionsheet
   },
   data () {
@@ -162,7 +177,7 @@ export default {
       },
 //    defaultSrc: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
       defaultSrc: '../../../static/assets/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
-      loading: false // 上拉加载
+      isNextStep: false // 下一步按钮状态
     }
   },
   computed: {
@@ -183,6 +198,10 @@ export default {
       const self = this
       self.params.profitPatternString = item
       self.params.profitPattern = key
+    },
+    nextStep () {
+      const self = this
+      self.isNextStep = !self.isNextStep
     }
   },
   watch: {
