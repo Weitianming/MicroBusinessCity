@@ -20,9 +20,12 @@
   #wx-friends .weui-cell.vux-tap-active.weui-cell_access{padding-left: 0; padding-right: 0;}
   #wx-friends .vux-popup-picker-value.vux-cell-value{margin-right: 25px;}
   #wx-friends .weui-cell_access .weui-cell__ft:after{width: 25px; height: 25px; top: -8px;}
-
-  /*滚动列表弹窗*/
-  .vux-popup-header{font-size: 38px!important; height: 60px!important;}
+  #wx-friends .vux-cell-box:not(:first-child):before {display: none;}
+  #wx-friends .vux-link-r{padding: 20px 30px!important;}
+  #wx-friends .vux-link-r .weui-cell__ft{width: 200px; margin-right: 30px;}
+  #wx-friends .vux-link-r .weui-cell__ft:after{left: 210px;}
+  #wx-friends .vux-input-label-placeholder{margin-left: 20px; color: #999999;}
+  #wx-friends .vux-input-label-symbol{margin-left: 20px;}
   
   
   
@@ -48,7 +51,7 @@
     	
       <div valign="bottom" class="card-header color-white no-border no-padding">
         <mt-swipe :auto="0">
-          <mt-swipe-item v-for="cimg in ceshi.img" :key="cimg.img">
+          <mt-swipe-item v-for="cimg in params.img" :key="cimg.img">
             <img class="lazy-img" v-lazy.vux_view_box_body="cimg.img">
           </mt-swipe-item>
         </mt-swipe>
@@ -57,8 +60,8 @@
       <div class="card-content">
         <div class="card-content-inner">
           <div class="card-content-inner-div-title">
-          	<x-textarea class="friends-spacing" title="标题" :max="50" v-model="ceshi.title"></x-textarea>
-          	<x-switch class="friends-spacing vux-switch-scale" title="是否显示价格" :value-map="[false, true]" :inline-desc="ceshi.showPrice ? '显示' : '不显示'" v-model="ceshi.showPrice"></x-switch>
+          	<x-textarea class="friends-spacing" title="标题" :max="50" v-model="params.title"></x-textarea>
+          	<x-switch class="friends-spacing vux-switch-scale" title="是否显示价格" :value-map="[false, true]" :inline-desc="params.showPrice ? '显示' : '不显示'" v-model="params.showPrice"></x-switch>
           </div>
         </div>
       </div>
@@ -68,55 +71,76 @@
           <div class="card-content-inner-div-title">
           	<cell class="friends-spacing vux-cell-div" title="拿货价">
           		<div>
-          			<span style="color: red;">{{'￥' + ceshi.money}}</span>
+          			<span style="color: red;">{{'￥' + params.money}}</span>
           		</div>
           	</cell>
-          	<popup-picker class="friends-spacing vux-cell-div" title="利润方式" :data="ceshi.profitPatternList" v-model="ceshi.profitPattern"></popup-picker>
-          	<x-input class="friends-spacing vux-cell-div" :title="ceshi.profitPattern[0] + ' ￥'" :show-clear="false"></x-input>
+          	<cell class="friends-spacing vux-cell-div vux-link-r" is-link title="利润方式" :value="params.profitPatternString" @click.native="getData.profitPatternActionsheet=true"></cell>
+          	<x-input class="friends-spacing vux-cell-div" :title="params.profitPatternString + (params.profitPattern === 'fixed' ? ' ￥' : ' %')" :show-clear="false"></x-input>
+          	<x-input class="friends-spacing vux-cell-div" :show-clear="false">
+          		<div slot="label">
+          			<span>实际售卖价格</span>
+          			<span class="vux-input-label-placeholder">(拿货价+利润)</span>
+          			<span class="vux-input-label-symbol">￥</span>
+          		</div>
+          	</x-input>
+          	<x-input class="friends-spacing vux-cell-div" :show-clear="false">
+          		<div slot="label">
+          			<span>自定义原价</span>
+          			<span class="vux-input-label-placeholder">(不填则不显示)</span>
+          			<span class="vux-input-label-symbol">￥</span>
+          		</div>
+          	</x-input>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-content">
+        <div class="card-content-inner">
+          <div class="card-content-inner-div-title">
+          	<x-input class="friends-spacing vux-cell-div" title="颜色" text-align="right" :show-clear="false"></x-input>
+          	<x-input class="friends-spacing vux-cell-div" title="尺寸" text-align="right" :show-clear="false"></x-input>
+          	<x-input class="friends-spacing vux-cell-div" title="手机号码" text-align="right" :show-clear="false"></x-input>
+          	<x-input class="friends-spacing vux-cell-div" title="QQ" text-align="right" :show-clear="false"></x-input>
           </div>
         </div>
       </div>
       
     </div>
     
-
-    <actionsheet v-model="actionsheetShow" :menus="uploadList" @on-click-menu="uploadMenuClick"></actionsheet>
+		<actionsheet v-model="getData.profitPatternActionsheet" :menus="getData.profitPatternList" theme="android" @on-click-menu="profitPatternActionsheetClickMenu"></actionsheet>
 
   </div>
 </template>
 
 <script>
-import { Group, Cell, XTextarea, XSwitch, PopupPicker, XInput, Actionsheet } from 'vux'
+import { Cell, XTextarea, XSwitch, XInput, Actionsheet } from 'vux'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
-    Group,
     Cell,
     XTextarea,
     XSwitch,
-    PopupPicker,
     XInput,
     Actionsheet
   },
   data () {
     return {
-      isSelected: 'commodityHome', // 主页内容
-      isScroll: false, // 顶部tab样式
-      actionsheetShow: false, // 上传按钮显示
-      uploadList: {
-        menu1: '分享朋友圈',
-        menu2: '上传微店'
+      getData: {
+        profitPatternActionsheet: false, // 利润方式弹框
+        profitPatternList: { // 利润方式类别
+          fixed: '固定利润',
+          Percentage: '百分比'
+        }
       },
-      ceshi: {
+      params: {
         id: '',
+        title: '新品测试黯石撒多按时', // 标题
         showPrice: true, // 是否显示价格
-        profitPattern: ['固定利润'], // 利润方式
-        profitPatternList: [['固定利润', '百分比']],
-        type: '玩具',
-        title: '新品测试黯石撒多按时',
-        content: '欧～欧～～Are you 王逗比',
         money: '2689.69',
+        profitPatternString: '固定利润', // 利润方式名称
+        profitPattern: 'fixed', // 利润方式类别
+        content: '欧～欧～～Are you 王逗比',
         commodityDate: '2018-01-01',
         img: [{
           url: 'javascript',
@@ -155,38 +179,13 @@ export default {
   },
   methods: {
     ...mapActions('state/loginModules', ['assignmentRegisterPhone', 'assignmentRegisterStage', 'assignmentRegisterTime']),
-    tabItemClick (val) { // tab切换
+    profitPatternActionsheetClickMenu (key, item) { // 上传类别
       const self = this
-      if (val === 'commodityHome') {
-        self.isSelected = 'commodityHome'
-        self.$store.commit('setScrollIndexMutations', 40)
-      } else if (val === 'details') {
-        self.isSelected = 'commodityHome'
-        self.$store.commit('setScrollIndexMutations', $('#commodityHome-div-height').height() + 40)
-      } else if (val === 'sale') {
-        self.isSelected = 'sale'
-      } else if (val === 'upload') {
-        self.isSelected = 'upload'
-      }
-    },
-    uploadClick () { // 上传按钮
-      const self = this
-      self.actionsheetShow = true
-    },
-    uploadMenuClick (key, item) { // 上传类别
-      if (key === 'menu1') {
-      }
+      self.params.profitPatternString = item
+      self.params.profitPattern = key
     }
   },
   watch: {
-    '$store.state.mainModules.scroll': function (val) { // 是否监听滚动条
-      const self = this
-      if (val >= 40) {
-        self.isScroll = true
-      } else {
-        self.isScroll = false
-      }
-    }
   }
 }
 </script>

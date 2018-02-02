@@ -1,4 +1,4 @@
-<style>
+<style type="text/css">
 	@import '../static/css/style.css';
 	#main{width:100%; height:100%;}
 	.vux-header-scroll-top{position: fixed!important;}
@@ -18,10 +18,6 @@
 	.app-vux-flexbox{padding: 16px 0;}
 	.app-vux-flexbox .flex-demo{text-align: center; padding: 12px; margin: 12px 18px; color: #666; background-color: #fff; border: 1px solid #eee; background-clip: padding-box;}
 	
-	/*上拉加载*/
-	.weui-loadmore {line-height: 100px!important; margin-top: 0!important; margin-bottom:  16px!important;}
-	.weui-loading {width: 40px!important; height: 40px!important;}
-	.weui-loadmore__tips {font-size: 32px!important;}
 </style>
 
 <template>
@@ -159,5 +155,20 @@ export default {
 </script>
 
 <style lang="less">
-	@import '~vux/src/styles/reset.less';
+  @import '~vux/src/styles/reset.less';
+  
+  /*列表弹窗*/
+  .weui-actionsheet{width: 80%!important;}
+  .weui-actionsheet__cell{font-size: 32px!important; padding: 20px 30px!important;}
+  
+  /*滚动列表弹窗*/
+  .vux-popup-header{font-size: 32px!important; height: 70px!important; line-height: 70px!important;}
+  .vux-popup-header-left{padding-left: 30px!important;}
+  .vux-popup-header-right{padding-right: 30px!important;}
+	
+  /*上拉加载*/
+  .weui-loadmore {line-height: 100px!important; margin-top: 0!important; margin-bottom:  16px!important;}
+  .weui-loading {width: 40px!important; height: 40px!important;}
+  .weui-loadmore__tips {font-size: 32px!important;}
+  
 </style>

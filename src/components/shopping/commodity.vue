@@ -28,7 +28,7 @@
   #commodity .mint-tab-container-item{background-color: #f6f6f6;}
   #commodity .card{margin: 0 auto; box-shadow: 0 0;}
   #commodity .card-header.color-white.no-border.no-padding{width: 100%;}
-  #commodity .mint-swipe{width: 100%; overflow: inherit;}
+  #commodity .mint-swipe{width: 100%; height: 100%; overflow: inherit; position: absolute;}
   #commodity .lazy-img{width: 100%;}
   #commodity .card-content{background-color: #fff;}
   #commodity .card-content-inner{padding: 20px 32px;}
@@ -56,7 +56,7 @@
 </style>
 
 <template>
-  <div id="commodity">
+  <div id="commodity" style="height: 100%;">
   	
   	<!--头部菜单栏-->
     <tab bar-active-color="red" active-color='#000' :class="isScroll ? 'vux-tab-scroll-top' : ''">
@@ -70,25 +70,6 @@
       </div>
     </tab>
     
-    <!--底部菜单栏-->
-    <tabbar>
-      <tabbar-item class="tabbar-commodityHome">
-        <x-icon slot="icon" type="ios-home-outline"></x-icon>
-        <span slot="label">店铺</span>
-      </tabbar-item>
-      <tabbar-item class="tabbar-details">
-        <x-icon slot="icon" type="ios-star-outline"></x-icon>
-        <!--<x-icon slot="icon" type="ios-star"></x-icon>-->
-        <span slot="label">收藏</span>
-      </tabbar-item>
-      <tabbar-item class="tabbar-sale">
-        <span slot="label">立即购买</span>
-      </tabbar-item>
-      <tabbar-item class="tabbar-upload">
-        <span slot="label">加入购物车</span>
-      </tabbar-item>
-    </tabbar>
-
     <mt-tab-container v-model="isSelected" :class="isScroll ? 'vux-container-scroll-top' : ''">
       <mt-tab-container-item id="commodityHome" class="commodityHome-class">
       	
@@ -149,6 +130,25 @@
       </mt-tab-container-item>
       
     </mt-tab-container>
+    
+    <!--底部菜单栏-->
+    <tabbar>
+      <tabbar-item class="tabbar-commodityHome">
+        <x-icon slot="icon" type="ios-home-outline"></x-icon>
+        <span slot="label">店铺</span>
+      </tabbar-item>
+      <tabbar-item class="tabbar-details">
+        <x-icon slot="icon" type="ios-star-outline"></x-icon>
+        <!--<x-icon slot="icon" type="ios-star"></x-icon>-->
+        <span slot="label">收藏</span>
+      </tabbar-item>
+      <tabbar-item class="tabbar-sale">
+        <span slot="label">立即购买</span>
+      </tabbar-item>
+      <tabbar-item class="tabbar-upload">
+        <span slot="label">加入购物车</span>
+      </tabbar-item>
+    </tabbar>
     
     <!--分享工具-->
     <actionsheet v-model="actionsheetShow" :menus="uploadList" @on-click-menu="uploadMenuClick"></actionsheet>
