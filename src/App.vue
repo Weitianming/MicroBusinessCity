@@ -13,10 +13,10 @@
 	.classification{width: 80px; height: 80px; line-height: 0px; fill: #6c6c6c;}
 
 	/*菜单*/
-	.vux-popup-div{height: calc(100% - 80px)!important; margin-top: 80px; padding: 16px 0; background-color: #fafafa!important; z-index: 999;}
-	.vux-popup-div .popup{width: 100%; padding: 16px 0;}
-	.app-vux-flexbox{padding: 16px 0;}
-	.app-vux-flexbox .flex-demo{text-align: center; padding: 12px; margin: 12px 18px; color: #666; background-color: #fff; border: 1px solid #eee; background-clip: padding-box;}
+	#app-popup {height: calc(100% - 80px)!important; margin-top: 80px; padding: 16px 0; background-color: #fafafa!important; z-index: 999;}
+	#app-popup .popup{width: 100%; padding: 16px 0;}
+	#app-popup .app-vux-flexbox{padding: 16px 0;}
+	#app-popup .app-vux-flexbox .flex-demo{text-align: center; padding: 12px; margin: 12px 18px; color: #666; background-color: #fff; border: 1px solid #eee; background-clip: padding-box;}
 	
 </style>
 
@@ -34,7 +34,7 @@
       </view-box>
     </div>
 
-    <popup v-model="classification.isState" position="top" :show-mask="false" class="vux-popup-div">
+    <popup id="app-popup" v-model="classification.isState" position="top" :show-mask="false" class="vux-popup-div">
 
       <div class="popup">
         <divider>热门分类</divider>

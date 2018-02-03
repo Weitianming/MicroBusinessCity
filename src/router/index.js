@@ -32,6 +32,10 @@ export default new Router({
     {
       path: '/choice-picture',
       component: choicePicture => require(['@/components/shopping/choice-picture'], choicePicture) // 分享朋友圈-编辑
+    },
+    {
+      path: '/share',
+      component: share => require(['@/components/shopping/share'], share) // 分享页面
     }
   ]
 })
