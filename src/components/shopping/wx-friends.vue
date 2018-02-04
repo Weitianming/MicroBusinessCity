@@ -173,12 +173,27 @@ export default {
     },
     nextStep () { // 下一步按钮
       const self = this
+      let is = true
+      let texts = ''
       if (!self.isNextStep) {
         self.isNextStep = true
-        setTimeout(() => {
-          self.isNextStep = false
+        if (self.params.title !== '') {
+          console.log(111)
+        } else {
+          is = false
+          texts = '请填写标题'
+        }
+        self.isNextStep = false
+        if (is) {
           self.$router.push({ path: '/choice-picture' })
-        }, 0)
+        } else {
+          this.$vux.toast.text(texts, 'middle')
+        }
+//      document.activeElement.scrollIntoViewIfNeeded() // 可视区域
+//      setTimeout(() => {
+//        self.isNextStep = false
+//        self.$router.push({ path: '/choice-picture' })
+//      }, 0)
       }
     }
   }

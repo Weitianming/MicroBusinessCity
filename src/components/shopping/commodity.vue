@@ -121,12 +121,12 @@
       
       <!--销售记录-->
       <mt-tab-container-item id="sale">
-        sale
+      	<div>销售记录</div>
       </mt-tab-container-item>
       
       <!--上传记录-->
       <mt-tab-container-item id="upload">
-        upload
+      	<div>上传记录</div>
       </mt-tab-container-item>
       
     </mt-tab-container>
@@ -205,19 +205,19 @@ export default {
   methods: {
     tabItemClick (val) { // 顶部选项卡切换
       const self = this
-      if (val === 'details') {
-        self.isSelected = 'commodityHome'
-      } else {
-        self.isSelected = val
-      }
       if (val === 'commodityHome') {
+        self.isSelected = 'commodityHome'
         setTimeout(() => {
           self.$store.commit('setScrollIndexMutations', self.tabScroll)
         }, 0)
       } else if (val === 'details') {
+        self.isSelected = 'commodityHome'
         setTimeout(() => {
           self.$store.commit('setScrollIndexMutations', (self.commodityHomeScroll + self.tabScroll))
         }, 0)
+      } else {
+        self.isSelected = val
+        self.$store.commit('setScrollIndexMutations', 0) // 滚动条初始至顶部
       }
     },
     getCommodityInformation () { // 获取商品信息
