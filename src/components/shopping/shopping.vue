@@ -1,19 +1,19 @@
 <style>
-	#shopping .content-padded{margin: 0 0 0 -18px;}
-	#shopping .weui-grid:before{display: none;}
-	#shopping .weui-grid:after{display: none;}
-	#shopping .row{overflow: inherit;}
-	#shopping .weui-grids{position: inherit; overflow: inherit!important;}
-	#shopping .weui-grid{padding: 18px 0 0 18px; background-color: #f6f6f6;}
-	#shopping .lazy-img{width: 100%;}
-	#shopping .card{background-color: #fff;}
-	#shopping .card-content{padding: 0 12px 12px 12px;}
-	#shopping .card-content-inner-div-title{color: #4f4f4f; font-size: 30px; line-height: 32px; font-family: helvetica,arial,sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
-	#shopping .card-content-inner-div-title-type{position: relative; bottom: 3px; margin-right: 10px; padding: 6px 8px 2px 8px; border-radius: 10px; font-size: 18px; line-height: 18px; display: inline-block; background-color: #FFD700;}
-	#shopping .color-gray{color: #949494; font-size: 26px; margin-top: 5px;}
-	#shopping .card-content-inner-div-money{color: red;}
-	#shopping .card-content-inner-div-money-symbol{font-size: 24px;}
-	#shopping .card-content-inner-div-money-content{font-weight: bold; font-size: 32px;}
+  #shopping .content-padded{margin: 0 0 0 -18px;}
+  #shopping .weui-grid:before{display: none;}
+  #shopping .weui-grid:after{display: none;}
+  #shopping .row{overflow: inherit;}
+  #shopping .weui-grids{position: inherit; overflow: inherit!important;}
+  #shopping .weui-grid{padding: 18px 0 0 18px; background-color: #f6f6f6;}
+  #shopping .lazy-img{width: 100%;}
+  #shopping .card{background-color: #fff;}
+  #shopping .card-content{padding: 0 12px 12px 12px;}
+  #shopping .card-content-inner-div-title{color: #4f4f4f; font-size: 30px; line-height: 32px; font-family: helvetica,arial,sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+  #shopping .card-content-inner-div-title-type{position: relative; bottom: 3px; margin-right: 10px; padding: 6px 8px 2px 8px; border-radius: 10px; font-size: 18px; line-height: 18px; display: inline-block; background-color: #FFD700;}
+  #shopping .color-gray{color: #949494; font-size: 26px; margin-top: 5px;}
+  #shopping .card-content-inner-div-money{color: red;}
+  #shopping .card-content-inner-div-money-symbol{font-size: 24px;}
+  #shopping .card-content-inner-div-money-content{font-weight: bold; font-size: 32px;}
 </style>
 
 <template>
@@ -53,60 +53,75 @@
 </template>
 
 <script>
-import { Grid, GridItem, XInput, LoadMore } from 'vux'
+import { Grid, GridItem, LoadMore } from 'vux'
 import { mapActions } from 'vuex'
 
 export default {
   components: {
     Grid,
     GridItem,
-    XInput,
     LoadMore
   },
   data () {
     return {
-      listData: [],
-      ceshi: {
-        id: '123',
-        type: '玩具',
-        title: '新品测试黯石撒多按时打算大',
-        content: '欧～欧～～Are you 王逗比',
-        money: '2689.69',
-        img: '//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg'
-//      img: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg'
+      isShoppingScroll: false, // 控制当前滚动条位置
+      param: {
+        office: 0 // 列表数量
       },
-      defaultSrc: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
-//    defaultSrc: '../../../static/assets/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
-      loading: false // 上拉加载
+      loading: false, // 上拉加载
+      listData: [] // 商品列表
     }
   },
   activated () {
-    this.$store.commit('setScrollIndexMutations', this.$store.state.mainModules.shoppingScroll)
-    for (var i = 0; i < 10; i++) {
-      this.listData.push(this.ceshi)
+    this.isShoppingScroll = false
+    if (this.$store.state.mainModules.shoppingScroll <= 0) {
+      this.$store.commit('setScrollIndexMutations', 0) // 设置商品页面默认位置
+    } else {
+      this.isShoppingScroll = true
     }
   },
   deactivated () {
-    const self = this
-    self.$store.commit('shoppingScrollMutationsTrue')
-    self.listData = []
+    this.listData = []
+    this.$destroy() // 销毁
   },
   methods: {
     ...mapActions('state/shoppingModules', ['commodityIdActions']),
-    loadMore () { // 上拉加载
+    getCommodityList () { // 获取商品列表
       const self = this
-      self.loading = true
-      setTimeout(() => {
-        for (let i = 1; i <= 10; i++) {
-          self.listData.push(self.ceshi)
-        }
-        self.loading = false
-      }, 0)
+      let param = {
+        office: self.param.office
+      }
+      self.$axioshttp.axios(self, API.mobileTerminal_commodityList, param).then(res => {
+        $.each(res.data.model.commodityList, (i, value) => {
+          self.listData.push({
+            id: value.id,
+            type: value.type,
+            title: value.title,
+            content: value.content,
+            money: value.money,
+            img: value.img
+          })
+        })
+        setTimeout(() => {
+          self.loading = false
+          if (self.isShoppingScroll) {
+            self.$store.commit('setScrollIndexMutations', self.$store.state.mainModules.shoppingScroll) // 设置商品页面默认位置
+            self.isShoppingScroll = false
+          }
+        }, 0)
+      })
+    },
+    loadMore () { // 上拉加载
+      if (!this.loading) {
+        this.loading = true
+        this.param.office += 10
+        this.getCommodityList()
+      }
     },
     commodity (id) { // 查看商品
-      const self = this
-      self.$store.dispatch('commodityIdActions', id) // 本地缓存计时
-      self.$router.push({ path: '/commodity' })
+      this.$store.dispatch('commodityIdActions', id) // 本地缓存商品主键
+      this.$router.push({ path: '/commodity' })
+      this.$store.commit('shoppingScrollMutationsTrue') // 获取当前页面滚动条位置
     }
   }
 }

@@ -11,16 +11,17 @@
   /*底部tab*/
   #commodity .weui-tabbar{position: fixed; height: 100px!important; background-color: #fff; display: inherit;}
   #commodity .weui-tabbar__item{float: left;}
-  #commodity .weui-tabbar .vux-x-icon{width: 35px; height: 35px;}
+  #commodity .weui-tabbar .vux-x-icon{width: 40px; height: 40px;}
   #commodity .weui-tabbar__label{margin: 0 auto; color: #000; font-size: 24px;}
-  #commodity .weui-tabbar .tabbar-commodityHome{width: 20%; padding-top: 20px;}
-  #commodity .weui-tabbar .tabbar-commodityHome .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
-  #commodity .weui-tabbar .tabbar-details{width: 20%; padding-top: 20px; border-left: 1px solid #e6e6e6;/*no*/}
-  #commodity .weui-tabbar .tabbar-details .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
-  #commodity .weui-tabbar .tabbar-sale{width: 29%; padding-top: 10px; height: 100%; background-color: #ec3e36;}
-  #commodity .weui-tabbar .tabbar-sale .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
-  #commodity .weui-tabbar .tabbar-upload{width: calc(31% - 1px);/*no*/ padding-top: 10px; height: 100%; background-color: #fa0;}
-  #commodity .weui-tabbar .tabbar-upload .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
+  #commodity .weui-tabbar .tabbar-shop{width: 20%; padding-top: 20px;}
+  #commodity .weui-tabbar .tabbar-shop .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
+  #commodity .weui-tabbar .tabbar-collection{width: 20%; padding-top: 20px; border-left: 1px solid #e6e6e6;/*no*/}
+  #commodity .weui-tabbar .tabbar-collection .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
+  #commodity .weui-tabbar .tabbar-collection .isIosStar{fill: #FFB90F;}
+  #commodity .weui-tabbar .tabbar-purchase{width: 29%; padding-top: 10px; height: 100%; background-color: #ec3e36;}
+  #commodity .weui-tabbar .tabbar-purchase .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
+  #commodity .weui-tabbar .tabbar-shopping{width: calc(31% - 1px);/*no*/ padding-top: 10px; height: 100%; background-color: #fa0;}
+  #commodity .weui-tabbar .tabbar-shopping .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
   
   /*商品样式*/
   #commodity .commodityHome-class{margin-bottom: 100px;}
@@ -41,7 +42,7 @@
   #commodity .card-content-inner-div-money-content{font-size: 38px;}
   #commodity .card-content-inner-div-commodityDate{color: #999; font-size: 28px; line-height: 56px;}
   #commodity .borderTop{margin: 0 32px; padding: 20px 0; border-top: 1px solid #ccc; color: #949494; font-size: 24px; overflow: auto;}
-  #commodity .borderTop li{list-style-type:none; float: left; padding: 0 8px; border-left: 1px solid #ccc; }
+  #commodity .borderTop li{list-style-type: none; float: left; padding: 0 8px; border-left: 1px solid #ccc; }
   #commodity .borderTop span{padding-left: 4px;font-size: 24px; color: #000;}
   #commodity .borderTop .borderTop-li1{padding-left: 0!important; border-left: none!important;}
   #commodity .borderTop .borderTop-li1 span{color: #f60;}
@@ -52,7 +53,6 @@
   
   /*分享列表*/
   #commodity .weui-actionsheet__cell.vux-actionsheet-menu-default{padding: 20px 24px;/*px*/ font-size: 32px;/*px*/}
-  
 </style>
 
 <template>
@@ -77,22 +77,22 @@
         <div id="commodityHome-div-height" class="card demo-card-header-pic grid-item-img">
           <div valign="bottom" class="card-header color-white no-border no-padding">
             <mt-swipe :auto="0" :show-indicators="false">
-              <mt-swipe-item v-for="cimg in ceshi.img" :key="cimg.img">
+              <mt-swipe-item v-for="cimg in getData.param.commodityImg" :key="cimg.img">
                 <img class="lazy-img" v-lazy.vux_view_box_body="cimg.img">
               </mt-swipe-item>
             </mt-swipe>
           </div>
           <div class="card-content">
             <div class="card-content-inner">
-              <div class="card-content-inner-div-title">{{ceshi.title}}</div>
-              <div class="card-content-inner-div-title color-gray">{{ceshi.content}}</div>
+              <div class="card-content-inner-div-title">{{getData.param.title}}</div>
+              <div class="card-content-inner-div-title color-gray">{{getData.param.content}}</div>
               <div class="card-content-inner-div-money">
                 <div class="floatL">
                   <span class="card-content-inner-div-money-symbol">¥ </span>
-                  <span class="card-content-inner-div-money-content">{{ceshi.money}}</span>
+                  <span class="card-content-inner-div-money-content">{{getData.param.money}}</span>
                 </div>
                 <div class="floatR">
-                  <span class="card-content-inner-div-commodityDate">{{ceshi.commodityDate}}</span>
+                  <span class="card-content-inner-div-commodityDate">{{getData.param.commodityDate}}</span>
                 </div>
               </div>
             </div>
@@ -112,7 +112,7 @@
         <!--详情-->
         <divider>详情</divider>
         <ul class="details-content">
-        	<li v-for="src in ceshi.detailsList">
+        	<li v-for="src in getData.param.detailsList">
         		<img class="lazy-img" v-lazy.vux_view_box_body="src">
         	</li>
         </ul>
@@ -133,19 +133,19 @@
     
     <!--底部菜单栏-->
     <tabbar>
-      <tabbar-item class="tabbar-commodityHome">
+      <tabbar-item class="tabbar-shop" @click.native="shopClick">
         <x-icon slot="icon" type="ios-home-outline"></x-icon>
         <span slot="label">店铺</span>
       </tabbar-item>
-      <tabbar-item class="tabbar-details">
-        <x-icon slot="icon" type="ios-star-outline"></x-icon>
-        <!--<x-icon slot="icon" type="ios-star"></x-icon>-->
+      <tabbar-item class="tabbar-collection" @click.native="collectionClick">
+        <x-icon v-if="!getData.param.isIosStar" slot="icon" type="ios-star-outline"></x-icon>
+        <x-icon v-if="getData.param.isIosStar" class="isIosStar" slot="icon" type="ios-star"></x-icon>
         <span slot="label">收藏</span>
       </tabbar-item>
-      <tabbar-item class="tabbar-sale">
+      <tabbar-item class="tabbar-purchase" @click.native="purchaseClick">
         <span slot="label">立即购买</span>
       </tabbar-item>
-      <tabbar-item class="tabbar-upload">
+      <tabbar-item class="tabbar-shopping" @click.native="shoppingClick">
         <span slot="label">加入购物车</span>
       </tabbar-item>
     </tabbar>
@@ -158,7 +158,6 @@
 
 <script>
 import { Tab, TabItem, Tabbar, TabbarItem, Divider, Actionsheet } from 'vux'
-import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -171,88 +170,104 @@ export default {
   },
   data () {
     return {
-      isSelected: 'commodityHome', // 主页内容
-      isScroll: false, // 顶部tab样式
-      actionsheetShow: false, // 上传按钮显示
+      isSelected: 'commodityHome', // 默认显示商品信息
+      isScroll: false, // 顶部选项卡位置固定
       tabScroll: $('.vux-header.app-vux-header').height(), // 导航栏高度
-      commodityHomeScroll: $('#commodityHome-div-height').height(), // 商品信息高度
-      uploadList: {
-        menu1: '分享朋友圈',
-        menu2: '上传微店'
+      commodityHomeScroll: '', // 商品信息高度
+      actionsheetShow: false, // 上传选项弹框
+      uploadList: { // 上传列表
+        friends: '分享朋友圈',
+        shop: '上传微店'
       },
-      ceshi: {
-        id: '',
-        type: '玩具',
-        title: '新品测试黯石撒多按时',
-        content: '欧～欧～～Are you 王逗比',
-        money: '2689.69',
-        commodityDate: '2018-01-01',
-//      img: [],
-        img: [{
-          url: 'javascript',
-          img: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg'
-        }, {
-          url: 'javascript',
-          img: '//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg'
-        }],
-        detailsList: [
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195114a3p2525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195114vjnb525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_1610171951148n2x525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195115pc4w525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_16101719511547ff525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_1610171951152pbv525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195117f723525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195117f7vq525071.jpg'
-        ]
-      },
-//    defaultSrc: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
-      defaultSrc: '../../../static/assets/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
-      loading: false // 上拉加载
+      getData: {
+        param: { // 获取商品信息
+          title: '', // 标题
+          content: '', // 内容
+          money: '', // 金额
+          commodityDate: '', // 上架时间
+          commodityImg: [], // 商品图片
+          detailsList: [], // 商品详情图片
+          isIosStar: false // 商品收藏状态
+        }
+      }
     }
   },
   activated () {
-    const self = this
-    $('.card-header.color-white.no-border.no-padding').css('height', $('#commodity').width())
-    self.commodityHomeScroll = $('#commodityHome-div-height').height() // 商品信息高度
-    self.$store.commit('scrollMutationsTrue')
+    this.$store.commit('setScrollIndexMutations', 0) // 滚动条初始至顶部
+    this.getCommodityInformation() // 获取商品信息
+    $('.card-header.color-white.no-border.no-padding').css('height', $('#commodity').width()) // 设置商品信息图片高度
+    $('.mint-swipe').css('height', $('#commodity').width()) // 设置商品信息图片高度
+    this.$store.commit('scrollMutationsTrue') // 开启滚动条监听
   },
   deactivated () {
-    this.$store.commit('scrollMutationsFalse')
     this.$destroy() // 销毁
   },
   methods: {
-    ...mapActions('state/loginModules', ['assignmentRegisterPhone', 'assignmentRegisterStage', 'assignmentRegisterTime']),
-    tabItemClick (val) { // tab切换
+    tabItemClick (val) { // 顶部选项卡切换
       const self = this
-      if (val === 'commodityHome') {
+      if (val === 'details') {
         self.isSelected = 'commodityHome'
+      } else {
+        self.isSelected = val
+      }
+      if (val === 'commodityHome') {
         setTimeout(() => {
           self.$store.commit('setScrollIndexMutations', self.tabScroll)
         }, 0)
       } else if (val === 'details') {
-        self.isSelected = 'commodityHome'
         setTimeout(() => {
-          self.$store.commit('setScrollIndexMutations', self.commodityHomeScroll + self.tabScroll)
+          self.$store.commit('setScrollIndexMutations', (self.commodityHomeScroll + self.tabScroll))
         }, 0)
-      } else if (val === 'sale') {
-        self.isSelected = 'sale'
-      } else if (val === 'upload') {
-        self.isSelected = 'upload'
       }
     },
-    uploadClick () { // 上传按钮
+    getCommodityInformation () { // 获取商品信息
       const self = this
-      self.actionsheetShow = true
+      let param = {
+        id: self.$store.state.shoppingModules.commodityId
+      }
+      self.$axioshttp.axios(self, API.mobileTerminal_commodityInformation, param).then(res => {
+        $.each(res.data.model.commodityImg, (i, value) => {
+          self.getData.param.commodityImg.push({
+            img: value
+          })
+        })
+        self.getData.param.title = res.data.model.title
+        self.getData.param.content = res.data.model.content
+        self.getData.param.money = res.data.model.money
+        self.getData.param.commodityDate = res.data.model.commodityDate
+        self.getData.param.detailsList = res.data.model.detailsList
+        setTimeout(() => {
+          self.commodityHomeScroll = $('#commodityHome-div-height').height() // 商品信息高度
+        }, 0)
+      })
+    },
+    shopClick () { // 进入店铺
+      this.$vux.toast.text('暂未开放', 'middle')
+    },
+    collectionClick () { // 商品收藏
+      this.getData.param.isIosStar = !this.getData.param.isIosStar
+      this.$vux.toast.text('暂未开放', 'middle')
+    },
+    purchaseClick () { // 立即购买
+      this.$vux.toast.text('暂未开放', 'middle')
+    },
+    shoppingClick () { // 加入购物车
+      this.$vux.toast.text('暂未开放', 'middle')
+    },
+    uploadClick () { // 上传按钮
+      this.actionsheetShow = true
     },
     uploadMenuClick (key, item) { // 上传类别
-      if (key === 'menu1') {
+      if (key === 'friends') {
+        this.$store.commit('scrollMutationsFalse') // 关闭滚动条监听
         this.$router.push({ path: '/wx-friends' })
+      } else {
+        this.$vux.toast.text('暂未开放', 'middle')
       }
     }
   },
   watch: {
-    '$store.state.mainModules.scroll': function (val) { // 是否监听滚动条
+    '$store.state.mainModules.scroll': function (val) { // 设置顶部选项卡位置
       const self = this
       if (val >= self.tabScroll) {
         if (!self.isScroll) {

@@ -27,6 +27,8 @@ Vue.use(WechatPlugin)
 Vue.use(MintUI)
 Vue.use(axioshttp)
 
+require('./mock.js')
+
 window.$ = $
 window.API = api
 

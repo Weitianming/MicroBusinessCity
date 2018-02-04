@@ -16,9 +16,9 @@ module.exports = {
   plugins: [
     'html'
   ],
-  Globals: [
-    'API'
-  ],
+  globals: {
+    'API': true
+  },
   // add your custom rules here
   'rules': {
     // allow paren-less arrow functions

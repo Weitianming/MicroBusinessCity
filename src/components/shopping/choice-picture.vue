@@ -18,7 +18,7 @@
   #choice-picture .vux-flexbox-check-icon{width: 40px; height: 40px; position: absolute; padding: 16px; right: 8px;}
   
   /*底部按钮*/
-  #choice-picture .weui-tabbar{height: 100px;}
+  #choice-picture .weui-tabbar{position: fixed; height: 100px;}
   #choice-picture .weui-tabbar .weui-btn{font-size: 38px; color: #fff; background-color: red;}
   #choice-picture .weui-tabbar .weui-loading{width: 58px!important; height: 58px!important;}
   
@@ -42,8 +42,7 @@
       <div class="card-content">
         <div class="card-content-inner">
           <div class="card-content-inner-div-title">
-            <cell class="friends-spacing vux-cell-div" title="请选择宝贝详情图片">
-              全选
+            <cell class="friends-spacing vux-cell-div" title="请选择宝贝详情图片">全选
               <img class="vux-whole-select-icon" @click="isSelectClick" :src="params.isSelect ? selectType.tick : selectType.defTick" />
             </cell>
           </div>
@@ -141,6 +140,7 @@ export default {
   },
   activated () {
     const self = this
+    this.$store.commit('setScrollIndexMutations', 0) // 滚动条初始至顶部
 //  $('.card-header.color-white.no-border.no-padding').css('height', $('#wx-friends').width())
     setTimeout(() => {
       $('#choice-picture .vux-flexbox-div .vux-flexbox-item .flex-demo').css('height', $('#choice-picture .vux-flexbox-div .vux-flexbox-item .flex-demo').width())
@@ -150,6 +150,7 @@ export default {
     self.getPicture()
   },
   deactivated () {
+    this.$destroy() // 销毁
   },
   methods: {
     ...mapActions('state/loginModules', ['assignmentRegisterPhone', 'assignmentRegisterStage', 'assignmentRegisterTime']),

@@ -16,44 +16,14 @@ const searchParam = params => {
   return searchParam
 }
 
-// 个人平台接口
-const axioshttpPersonal = (self, url, params) => {
+// 接口请求方式
+const axioshttp = (self, url, params) => {
   var data = {}
   if (params !== null && params !== undefined) {
     params['flag'] = self.$store.state.mainModules.flag
     data = searchParam(params)
   }
   return self.$http.post(path + url, data)
-    .then(res => {
-      return res
-    }, res => {
-      return res
-    })
-}
-
-// 用户平台接口
-const axioshttpUser = (self, url, params) => {
-  var data = {}
-  if (params !== null && params !== undefined) {
-    params['flag'] = self.$store.state.mainModules.flag
-    data = searchParam(params)
-  }
-  return self.$http.post(url, data)
-    .then(res => {
-      return res
-    }, res => {
-      return res
-    })
-}
-
-// 租赁平台接口
-const axioshttpLease = (self, url, params) => {
-  var data = {}
-  if (params !== null && params !== undefined) {
-    params['flag'] = self.$store.state.mainModules.flag
-    data = searchParam(params)
-  }
-  return self.$http.post(url, data)
     .then(res => {
       return res
     }, res => {
@@ -69,19 +39,11 @@ const alertPluginShow = (self, title, content) => {
   })
 }
 
-// 提示框显示
-const toastPluginShow = (self, text) => {
-  self.$vux.toast.text(text, 'default')
-}
-
 export default {
   install (Vue) {
     Vue.prototype.$axioshttp = {
-      personal: axioshttpPersonal,
-      user: axioshttpUser,
-      lease: axioshttpLease,
-      alertShow: alertPluginShow,
-      toastShow: toastPluginShow
+      axios: axioshttp,
+      alertShow: alertPluginShow
     }
   }
 }

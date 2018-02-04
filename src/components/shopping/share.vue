@@ -89,16 +89,14 @@
 </template>
 
 <script>
-import { Cell, Tabbar, TabbarItem, Divider, Actionsheet } from 'vux'
-import { mapActions } from 'vuex'
+import { Cell, Tabbar, TabbarItem, Divider } from 'vux'
 
 export default {
   components: {
     Cell,
     Tabbar,
     TabbarItem,
-    Divider,
-    Actionsheet
+    Divider
   },
   data () {
     return {
@@ -118,7 +116,6 @@ export default {
         content: '欧～欧～～Are you 王逗比',
         money: '2689.69',
         commodityDate: '2018-01-01',
-//      img: [],
         img: [{
           url: 'javascript',
           img: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg'
@@ -144,33 +141,17 @@ export default {
   },
   activated () {
     const self = this
+    this.$store.commit('setScrollIndexMutations', 0) // 滚动条初始至顶部
     $('.card-header.color-white.no-border.no-padding').css('height', $('#share').width())
     self.commodityHomeScroll = $('#commodityHome-div-height').height() // 商品信息高度
-    self.$store.commit('scrollMutationsTrue')
   },
   deactivated () {
-    this.$store.commit('scrollMutationsFalse')
     this.$destroy() // 销毁
   },
   methods: {
-    ...mapActions('state/loginModules', ['assignmentRegisterPhone', 'assignmentRegisterStage', 'assignmentRegisterTime']),
     uploadMenuClick (key, item) { // 上传类别
       if (key === 'menu1') {
         this.$router.push({ path: '/wx-friends' })
-      }
-    }
-  },
-  watch: {
-    '$store.state.mainModules.scroll': function (val) { // 是否监听滚动条
-      const self = this
-      if (val >= self.tabScroll) {
-        if (!self.isScroll) {
-          self.isScroll = true
-        }
-      } else {
-        if (self.isScroll) {
-          self.isScroll = false
-        }
       }
     }
   }
