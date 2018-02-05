@@ -4,35 +4,20 @@
   #choice-picture .card{margin: 0 auto; padding-bottom: 0px; box-shadow: 0 0; background-color: #fff;}
   #choice-picture .card-header.color-white.no-border.no-padding{width: 100%;}
   #choice-picture .card-content{background-color: #fff;}
-  #choice-picture .friends-spacing{padding: 20px 30px;}
-  #choice-picture .vux-cell-div{height: 60px;}
-  #choice-picture .card-content-inner-div-title{font-size: 30px; }
-  #choice-picture .vux-whole-select{position: absolute; top: 50px; right: 90px;}
-  #choice-picture .vux-whole-select-icon{width: 40px; height: 40px; position: relative; top: 8px; margin-left: 10px;}
+  #choice-picture .card-content-inner-div-title{font-size: 18px;}
+  #choice-picture .vux-whole-select-icon{width: 25px; height: 25px; position: relative; top: 5px; margin-left: 10px;}
 
   /*图片列表*/
-  #choice-picture .vux-previewer-div{margin-top: 20px;}
-  #choice-picture .vux-flexbox-div{padding: 16px 0; margin-bottom: 100px; background-color: #DEDEDE;}
-  #choice-picture .flex-demo{width: calc(100% - 16px); height: 100%; padding: 8px; position: relative; text-align: center; background-clip: padding-box;}
+  #choice-picture .vux-flexbox-div{padding: 8px 0; margin-bottom: 45px; background-color: #DEDEDE;}
+  #choice-picture .flex-demo{width: calc(100% - 8px); height: 100%; padding: 4px; position: relative; text-align: center; background-clip: padding-box;}
   #choice-picture .lazy-img{width: 100%; height: 100%;}
-  #choice-picture .vux-flexbox-check-icon{width: 40px; height: 40px; position: absolute; padding: 16px; right: 8px;}
+  #choice-picture .vux-flexbox-check-icon{width: 25px; height: 25px; position: absolute; padding: 8px; right: 4px;}
   
   /*底部按钮*/
-  #choice-picture .weui-tabbar{position: fixed; height: 100px;}
-  #choice-picture .weui-tabbar .weui-btn{font-size: 38px; color: #fff; background-color: red;}
-  #choice-picture .weui-tabbar .weui-loading{width: 58px!important; height: 58px!important;}
-  
-  /*图片弹框*/
-  #choice-picture-previewer .pswp__top-bar{height: 88px; z-index: 100;}
-  #choice-picture-previewer .pswp__counter{height: 88px; padding: 20px; font-size: 32px;}
-  #choice-picture-previewer .pswp__button{width: 88px; height: 88px; background-size: 528px 176px; display: none;}
-  #choice-picture-previewer .pswp__button--close{background-position: 0 -88px;}
-  #choice-picture-previewer .pswp__button--share{background-position: -88px -88px;}
-  #choice-picture-previewer .pswp__button--fs{display: none;}
-  #choice-picture-previewer .pswp__button--zoom{background-position: -176px 0;}
-  #choice-picture-previewer .pswp__preloader{display: none;}
-  #choice-picture-previewer .previewer-delete-icon-box{position: fixed; height: 88px; text-align: right; font-size: 32px; color: #fff; z-index: 10000;}
-  
+  #choice-picture .weui-tabbar{position: fixed; height: 45px;}
+  #choice-picture .weui-tabbar .weui-btn{color: #fff; background-color: red;}
+  #choice-picture .weui-btn{border-radius: 0px!important;}
+  #choice-picture .weui-btn:after{display: none;}
 </style>
 
 <template>
@@ -50,7 +35,7 @@
       </div>
     </div>
 
-    <div class="vux-previewer-div">
+    <div>
       <flexbox :gutter="0" wrap="wrap" class="vux-flexbox-div">
         <flexbox-item :span="1/4" v-for="(item, index) in params.img" :key="index">
           <div class="flex-demo">
@@ -197,7 +182,7 @@ export default {
         setTimeout(() => {
           self.isNextStep = false
           self.$router.push({ path: '/share' })
-        }, 2000)
+        }, 0)
       }
     }
   },

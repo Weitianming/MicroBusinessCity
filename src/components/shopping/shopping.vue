@@ -1,19 +1,19 @@
 <style>
-  #shopping .content-padded{margin: 0 0 0 -18px;}
+  #shopping .content-padded{margin: 0 0 0 -6px;}
   #shopping .weui-grid:before{display: none;}
   #shopping .weui-grid:after{display: none;}
   #shopping .row{overflow: inherit;}
   #shopping .weui-grids{position: inherit; overflow: inherit!important;}
-  #shopping .weui-grid{padding: 18px 0 0 18px; background-color: #f6f6f6;}
+  #shopping .weui-grid{padding: 6px 0 0 6px;}
   #shopping .lazy-img{width: 100%;}
   #shopping .card{background-color: #fff;}
-  #shopping .card-content{padding: 0 12px 12px 12px;}
-  #shopping .card-content-inner-div-title{color: #4f4f4f; font-size: 30px; line-height: 32px; font-family: helvetica,arial,sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
-  #shopping .card-content-inner-div-title-type{position: relative; bottom: 3px; margin-right: 10px; padding: 6px 8px 2px 8px; border-radius: 10px; font-size: 18px; line-height: 18px; display: inline-block; background-color: #FFD700;}
-  #shopping .color-gray{color: #949494; font-size: 26px; margin-top: 5px;}
+  #shopping .card-content{padding: 0 6px 6px 6px;}
+  #shopping .card-content-inner-div-title{color: #4f4f4f; font-size: 16px; line-height: 16px; font-family: helvetica,arial,sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+  #shopping .card-content-inner-div-title-type{position: relative; bottom: 2px; margin-right: 5px; padding: 2.5px 4px 2px 4px; border-radius: 6px; font-size: 8px; line-height: 8px; display: inline-block; background-color: #FFD700;}
+  #shopping .color-gray{color: #949494; font-size: 12px; margin-top: 2px;}
   #shopping .card-content-inner-div-money{color: red;}
-  #shopping .card-content-inner-div-money-symbol{font-size: 24px;}
-  #shopping .card-content-inner-div-money-content{font-weight: bold; font-size: 32px;}
+  #shopping .card-content-inner-div-money-symbol{font-size: 12px;}
+  #shopping .card-content-inner-div-money-content{font-weight: bold; font-size: 16px;}
 </style>
 
 <template>

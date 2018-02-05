@@ -1,30 +1,29 @@
 <style>
   /*头部tab*/
-  #commodity .vux-tab {height: 100px!important;}
-  #commodity .vux-tab-item {font-size: 30px!important; line-height: 100px!important;}
-  #commodity .vux-tab-scroll-top{position: fixed; width: 100%; top: 0; z-index: 10000;}
-  #commodity .vux-container-scroll-top{margin-top: 100px;}
-  #commodity .uploadClick{position: absolute; right: 40px; top: 150px; line-height: 60px; color: #fff; width: 160px; background-color: #000; z-index: 10000; opacity:0.8; fill: #fff; border-radius: 60px;}
-  #commodity .vux-uploadClick{width: 48px; height: 48px; margin: 0 0 -13px 15px;}
-  #commodity .uploadClick span{font-size: 30px;}
+  #commodity .vux-tab{height: 50px;}
+  #commodity .vux-tab-scroll-top{position: fixed; width: 100%; top: 0; z-index: 999;}
+  #commodity .vux-container-scroll-top{margin-top: 50px;}
+  #commodity .uploadClick{position: absolute; right: 20px; top: 70px; line-height: 32px; width: 75px; color: #fff; background-color: #000; z-index: 999; opacity:0.8; fill: #fff; border-radius: 20px;}
+  #commodity .vux-uploadClick{width: 25px; height: 25px; margin: 0 0 -7px 8px;}
+  #commodity .uploadClick span{font-size: 15px;}
   
   /*底部tab*/
-  #commodity .weui-tabbar{position: fixed; height: 100px!important; background-color: #fff; display: inherit;}
+  #commodity .weui-tabbar{position: fixed; height: 60px; background-color: #fff; display: inherit;}
   #commodity .weui-tabbar__item{float: left;}
-  #commodity .weui-tabbar .vux-x-icon{width: 40px; height: 40px;}
-  #commodity .weui-tabbar__label{margin: 0 auto; color: #000; font-size: 24px;}
-  #commodity .weui-tabbar .tabbar-shop{width: 20%; padding-top: 20px;}
+  #commodity .weui-tabbar .vux-x-icon{width: 25px; padding-top: 5px; height: 25px;}
+  #commodity .weui-tabbar__label{margin: 0 auto; color: #000; font-size: 15px;}
+  #commodity .weui-tabbar .tabbar-shop{width: 20%;}
   #commodity .weui-tabbar .tabbar-shop .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
-  #commodity .weui-tabbar .tabbar-collection{width: 20%; padding-top: 20px; border-left: 1px solid #e6e6e6;/*no*/}
+  #commodity .weui-tabbar .tabbar-collection{width: 20%; border-left: 1px solid #e6e6e6;/*no*/}
   #commodity .weui-tabbar .tabbar-collection .weui-tabbar__icon{display: inherit; width: auto; height: auto;}
   #commodity .weui-tabbar .tabbar-collection .isIosStar{fill: #FFB90F;}
-  #commodity .weui-tabbar .tabbar-purchase{width: 29%; padding-top: 10px; height: 100%; background-color: #ec3e36;}
-  #commodity .weui-tabbar .tabbar-purchase .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
-  #commodity .weui-tabbar .tabbar-shopping{width: calc(31% - 1px);/*no*/ padding-top: 10px; height: 100%; background-color: #fa0;}
-  #commodity .weui-tabbar .tabbar-shopping .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
+  #commodity .weui-tabbar .tabbar-purchase{width: 29%; padding: 6px 0 4px 0; height: 100%; background-color: #ec3e36;}
+  #commodity .weui-tabbar .tabbar-purchase .weui-tabbar__label{font-size: 18px; color: #fff;}
+  #commodity .weui-tabbar .tabbar-shopping{width: calc(31% - 1px);/*no*/ padding: 6px 0px 4px 0px; background-color: #fa0;}
+  #commodity .weui-tabbar .tabbar-shopping .weui-tabbar__label{font-size: 18px; color: #fff;}
   
   /*商品样式*/
-  #commodity .commodityHome-class{margin-bottom: 100px;}
+  #commodity .commodityHome-class{margin-bottom: 60px;}
   #commodity .mint-tab-container{overflow: inherit;}
   #commodity .mint-tab-container-item{background-color: #f6f6f6;}
   #commodity .card{margin: 0 auto; box-shadow: 0 0;}
@@ -32,27 +31,23 @@
   #commodity .mint-swipe{width: 100%; height: 100%; overflow: inherit; position: absolute;}
   #commodity .lazy-img{width: 100%;}
   #commodity .card-content{background-color: #fff;}
-  #commodity .card-content-inner{padding: 20px 32px;}
-  #commodity .card-content-inner-div-title{font-size: 34px; line-height: 36px;}
-  #commodity .color-gray{margin: 30px 0px 20px 0!important; color: #4f4f4f; font-size: 28px; line-height: 30px;}
+  #commodity .card-content-inner{padding: 10px 12px;}
+  #commodity .card-content-inner-div-title{font-size: 20px; line-height: 22px;}
+  #commodity .color-gray{margin: 15px 0px 10px 0!important; color: #4f4f4f; font-size: 16px; line-height: 16px;}
   #commodity .card-content-inner-div-money{color: #ec3e36; overflow: hidden;}
   #commodity .floatL{float: left;}
   #commodity .floatR{float: right;}
-  #commodity .card-content-inner-div-money-symbol{font-size: 30px;}
-  #commodity .card-content-inner-div-money-content{font-size: 38px;}
-  #commodity .card-content-inner-div-commodityDate{color: #999; font-size: 28px; line-height: 56px;}
-  #commodity .borderTop{margin: 0 32px; padding: 20px 0; border-top: 1px solid #ccc; color: #949494; font-size: 24px; overflow: auto;}
-  #commodity .borderTop li{list-style-type: none; float: left; padding: 0 8px; border-left: 1px solid #ccc; }
-  #commodity .borderTop span{padding-left: 4px;font-size: 24px; color: #000;}
+  #commodity .card-content-inner-div-money-symbol{font-size: 16px;}
+  #commodity .card-content-inner-div-money-content{font-size: 20px;}
+  #commodity .card-content-inner-div-commodityDate{color: #999; font-size: 14px; line-height: 34px;}
+  #commodity .borderTop{margin: 0 15px; padding: 10px 0; border-top: 1px solid #ccc; color: #949494; font-size: 12px; overflow: auto;}
+  #commodity .borderTop li{list-style-type: none; float: left; padding: 0 4px; border-left: 1px solid #ccc; }
+  #commodity .borderTop span{padding-left: 4px; font-size: 12px; color: #000;}
   #commodity .borderTop .borderTop-li1{padding-left: 0!important; border-left: none!important;}
   #commodity .borderTop .borderTop-li1 span{color: #f60;}
   
   /*详情样式*/
   #commodity .vux-divider{margin-top: 10px;}
-  #commodity .details-content{line-height: 0;}
-  
-  /*分享列表*/
-  #commodity .weui-actionsheet__cell.vux-actionsheet-menu-default{padding: 20px 24px;/*px*/ font-size: 32px;/*px*/}
 </style>
 
 <template>
@@ -111,7 +106,7 @@
         
         <!--详情-->
         <divider>详情</divider>
-        <ul class="details-content">
+        <ul>
         	<li v-for="src in getData.param.detailsList">
         		<img class="lazy-img" v-lazy.vux_view_box_body="src">
         	</li>
@@ -172,7 +167,7 @@ export default {
     return {
       isSelected: 'commodityHome', // 默认显示商品信息
       isScroll: false, // 顶部选项卡位置固定
-      tabScroll: $('.vux-header.app-vux-header').height(), // 导航栏高度
+      tabScroll: 46, // 导航栏高度
       commodityHomeScroll: '', // 商品信息高度
       actionsheetShow: false, // 上传选项弹框
       uploadList: { // 上传列表
@@ -213,7 +208,7 @@ export default {
       } else if (val === 'details') {
         self.isSelected = 'commodityHome'
         setTimeout(() => {
-          self.$store.commit('setScrollIndexMutations', (self.commodityHomeScroll + self.tabScroll))
+          self.$store.commit('setScrollIndexMutations', self.commodityHomeScroll + self.tabScroll)
         }, 0)
       } else {
         self.isSelected = val

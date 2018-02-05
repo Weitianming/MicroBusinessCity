@@ -1,19 +1,18 @@
 <style>
-  
   /*底部tab*/
-  #share .weui-tabbar{position: fixed; height: 100px!important; background-color: #fff; display: inherit;}
+  #share .weui-tabbar{position: fixed; height: 60px!important; background-color: #fff; display: inherit;}
   #share .weui-tabbar__item{float: left;}
-  #share .weui-tabbar .vux-x-icon{width: 35px; height: 35px;}
-  #share .weui-tabbar__label{margin: 0 auto; color: #000; font-size: 24px;}
-  #share .weui-tabbar .tabbar-money{width: 40%; height: 100%; padding-top: 10px;}
-  #share .weui-tabbar .tabbar-money .weui-tabbar__label{font-size: 36px; line-height: 85px; color: red;}
-  #share .weui-tabbar .tabbar-consultation{width: 29%; padding-top: 10px; height: 100%; background-color: #fa0;}
-  #share .weui-tabbar .tabbar-consultation .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
-  #share .weui-tabbar .tabbar-contact{width: calc(31% - 1px);/*no*/ padding-top: 10px; height: 100%; background-color: #ec3e36;}
-  #share .weui-tabbar .tabbar-contact .weui-tabbar__label{font-size: 36px; line-height: 85px; color: #fff;}
+  #share .weui-tabbar .vux-x-icon{width: 25px; height: 25px;}
+  #share .weui-tabbar__label{margin: 0 auto; color: #000; font-size: 15px;}
+  #share .weui-tabbar .tabbar-money{width: 40%; padding: 6px 0px 4px 0px;}
+  #share .weui-tabbar .tabbar-money .weui-tabbar__label{font-size: 20px; color: red; font-weight: bold;}
+  #share .weui-tabbar .tabbar-consultation{width: 29%; padding: 6px 0px 4px 0px; background-color: #fa0;}
+  #share .weui-tabbar .tabbar-consultation .weui-tabbar__label{font-size: 18px; color: #fff;}
+  #share .weui-tabbar .tabbar-contact{width: calc(31% - 1px);/*no*/ padding: 6px 0px 4px 0px; background-color: #ec3e36;}
+  #share .weui-tabbar .tabbar-contact .weui-tabbar__label{font-size: 18px; color: #fff;}
   
   /*商品样式*/
-  #share .commodityHome-class{margin-bottom: 100px;}
+  #share .commodityHome-class{margin-bottom: 60px;}
   #share .mint-tab-container{overflow: inherit;}
   #share .mint-tab-container-item{background-color: #f6f6f6;}
   #share .card{margin: 0 auto; box-shadow: 0 0;}
@@ -21,16 +20,12 @@
   #share .mint-swipe{width: 100%; height: 100%; overflow: inherit; position: absolute;}
   #share .lazy-img{width: 100%;}
   #share .card-content{background-color: #fff;}
-  #share .card-content-inner{padding: 20px 32px;}
-  #share .card-content-inner-div-title{font-size: 34px; line-height: 36px; font-weight: bold;}
-  #share .color-gray{margin: 30px 0px 20px 0!important; color: #4f4f4f; font-size: 32px; line-height: 30px;}
-  #share .weui-cell{padding: 16px 32px; font-size: 28px;}
+  #share .card-content-inner{padding: 10px 16px;}
+  #share .card-content-inner-div-title{font-size: 20px; font-weight: bold;}
   
   /*详情样式*/
   #share .vux-divider{margin-top: 10px;}
   #share .details-content{line-height: 0;}
-  
-  
 </style>
 
 <template>
