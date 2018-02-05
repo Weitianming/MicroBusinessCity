@@ -47,15 +47,15 @@
           		</div>
           	</cell>
           	<cell is-link title="利润方式" :value="params.profitPatternString" @click.native="getData.profitPatternActionsheet=true"></cell>
-          	<x-input :title="params.profitPatternString + (params.profitPattern === 'fixed' ? ' ￥' : ' %')" :show-clear="false"></x-input>
-          	<x-input :show-clear="false">
+          	<x-input :title="params.profitPatternString + (params.profitPattern === 'fixed' ? ' ￥' : ' %')" required :show-clear="false"></x-input>
+          	<x-input :show-clear="false" required>
           		<div slot="label">
           			<span>实际售卖价格</span>
           			<span class="vux-input-label-placeholder">(拿货价+利润)</span>
           			<span class="vux-input-label-symbol">￥</span>
           		</div>
           	</x-input>
-          	<x-input :show-clear="false">
+          	<x-input :show-clear="false" required>
           		<div slot="label">
           			<span>自定义原价</span>
           			<span class="vux-input-label-placeholder">(不填则不显示)</span>
@@ -69,10 +69,10 @@
       <div class="card-content">
         <div class="card-content-inner">
           <div class="card-content-inner-div-title">
-          	<x-input title="颜色" text-align="right" :show-clear="false"></x-input>
-          	<x-input title="尺寸" text-align="right" :show-clear="false"></x-input>
-          	<x-input title="手机号码" text-align="right" :show-clear="false"></x-input>
-          	<x-input title="QQ" text-align="right" :show-clear="false"></x-input>
+          	<x-input title="颜色" required text-align="right" :show-clear="false"></x-input>
+          	<x-input title="尺寸" required text-align="right" :show-clear="false"></x-input>
+          	<x-input title="手机号码" required mask="999 9999 9999" is-type="china-mobile" text-align="right" :max="13" v-model="params.commodityPhone" :show-clear="false"></x-input>
+          	<x-input title="QQ" required type="number" text-align="right" :show-clear="false"></x-input>
           </div>
         </div>
       </div>
@@ -111,12 +111,13 @@ export default {
         }
       },
       params: {
+        commodityImg: [], // 商品图片
         title: '', // 标题
         showPrice: true, // 是否显示价格
         money: '',
         profitPatternString: '固定利润', // 利润方式名称
         profitPattern: 'fixed', // 利润方式类别
-        commodityImg: [] // 商品图片
+        commodityPhone: '' // 手机号
       },
       isNextStep: false // 下一步按钮状态
     }
