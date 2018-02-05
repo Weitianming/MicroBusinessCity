@@ -38,6 +38,10 @@ Mock.mock('/api/mobileTerminal/commodityInformation', { // 获取商品信息
     'content': '欧～欧～～Are you 王逗比',
     'money': '2689.69',
     'commodityDate': '2018-01-01',
+    'colour|8-16': '',
+    'size|8-16': '',
+    'phone': 18705512512,
+    'qq': 806783737,
     'commodityImg': [
       'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
       '//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg'

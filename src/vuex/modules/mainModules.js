@@ -2,7 +2,7 @@ const mainModules = {
   state: { // 唯一数据源
     shoppingScroll: 0, // 商品列表滚动条位置
     isShoppingScroll: false, // 商品列表滚动条位置状态
-    scroll: 0, // 滚动条位置
+    scroll: -1, // 滚动条位置
     isScroll: false, // 滚动条监听状态
     setScrollIndex: null // 设置滚动条位置
   },

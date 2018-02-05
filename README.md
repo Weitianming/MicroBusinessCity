@@ -1,6 +1,7 @@
 # MicroBusinessCity
 
 > 微商城
+>Vue + Vuex + Vux + Mint UI
 
 ## Build Setup
 

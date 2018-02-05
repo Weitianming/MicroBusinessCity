@@ -109,10 +109,12 @@ export default {
     },
     '$store.state.mainModules.setScrollIndex': function (val) { // 设置滚动条位置
       const self = this
-      if (val !== null) {
+      if (val >= 0) {
         if (self.$store.state.mainModules.scroll !== val) {
           self.$refs.viewBox.scrollTo(val)
-          self.$store.commit('setScrollIndexMutations', null)
+          setTimeout(() => {
+            self.$store.commit('setScrollIndexMutations', -1)
+          }, 0)
         }
       }
     }

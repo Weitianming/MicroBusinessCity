@@ -30,47 +30,47 @@
 
 <template>
   <div id="share" style="height: 100%;">
-  	
+
     <mt-tab-container v-model="isSelected">
       <mt-tab-container-item id="commodityHome" class="commodityHome-class">
-      	
-      	<!--商品-->
+
+        <!--商品-->
         <div id="commodityHome-div-height" class="card demo-card-header-pic grid-item-img">
           <div valign="bottom" class="card-header color-white no-border no-padding">
             <mt-swipe :auto="0" :show-indicators="false">
-              <mt-swipe-item v-for="cimg in ceshi.img" :key="cimg.img">
+              <mt-swipe-item v-for="cimg in params.commodityImg" :key="cimg.img">
                 <img class="lazy-img" v-lazy.vux_view_box_body="cimg.img">
               </mt-swipe-item>
             </mt-swipe>
           </div>
           <div class="card-content">
             <div class="card-content-inner">
-              <div class="card-content-inner-div-title">{{ceshi.title}}</div>
+              <div class="card-content-inner-div-title">{{params.title}}</div>
             </div>
           </div>
           <div class="card-content">
-          	<cell title="颜色" value="啊实打实的"></cell>
-          	<cell title="尺寸" value="啊实打实的"></cell>
-          	<cell title="联系方式" value="啊实打实的"></cell>
-          	<cell title="QQ" value="啊实打实的"></cell>
+            <cell title="颜色" :value="params.colour"></cell>
+            <cell title="尺寸" :value="params.size"></cell>
+            <cell title="联系方式" :value="params.phone"></cell>
+            <cell title="QQ" :value="params.qq"></cell>
           </div>
         </div>
-        
+
         <!--商品详情-->
         <divider>商品详情</divider>
         <ul class="details-content">
-        	<li v-for="src in ceshi.detailsList">
-        		<img class="lazy-img" v-lazy.vux_view_box_body="src">
-        	</li>
+          <li v-for="src in params.detailsList">
+            <img class="lazy-img" v-lazy.vux_view_box_body="src">
+          </li>
         </ul>
 
       </mt-tab-container-item>
     </mt-tab-container>
-    
+
     <!--底部菜单栏-->
     <tabbar>
       <tabbar-item class="tabbar-money">
-        <span slot="label">¥ {{ceshi.money}}</span>
+        <span slot="label">¥ {{params.money}}</span>
       </tabbar-item>
       <tabbar-item class="tabbar-consultation">
         <span slot="label">QQ咨询</span>
@@ -79,7 +79,7 @@
         <span slot="label">电话联系</span>
       </tabbar-item>
     </tabbar>
-    
+
   </div>
 </template>
 
@@ -95,59 +95,49 @@ export default {
   },
   data () {
     return {
-      isSelected: 'commodityHome', // 主页内容
-      isScroll: false, // 顶部tab样式
-      actionsheetShow: false, // 上传按钮显示
-      tabScroll: $('.vux-header.app-vux-header').height(), // 导航栏高度
-      commodityHomeScroll: $('#commodityHome-div-height').height(), // 商品信息高度
-      uploadList: {
-        menu1: '分享朋友圈',
-        menu2: '上传微店'
+      isSelected: 'commodityHome', // 这是bug(不能删)
+      params: {
+        commodityImg: [], // 商品图片
+        title: '', // 标题
+        money: '', // 价格
+        colour: '', // 颜色
+        size: '', // 尺寸
+        phone: '', // 手机号
+        qq: '', // QQ号
+        detailsList: [] // 详情图片
       },
-      ceshi: {
-        id: '',
-        type: '玩具',
-        title: '新品测试黯石撒多按时',
-        content: '欧～欧～～Are you 王逗比',
-        money: '2689.69',
-        commodityDate: '2018-01-01',
-        img: [{
-          url: 'javascript',
-          img: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg'
-        }, {
-          url: 'javascript',
-          img: '//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg'
-        }],
-        detailsList: [
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195114a3p2525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195114vjnb525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_1610171951148n2x525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195115pc4w525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_16101719511547ff525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_1610171951152pbv525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195117f723525071.jpg',
-          'http://pic2.hznzcn.com/hznzcn/20161116/AYG/3tb_161017195117f7vq525071.jpg'
-        ]
-      },
-//    defaultSrc: 'https://gd4.alicdn.com/imgextra/i2/704298669/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
-      defaultSrc: '../../../static/assets/TB2rx1Be6uhSKJjSspaXXXFgFXa_!!704298669.jpg',
       loading: false // 上拉加载
     }
   },
   activated () {
-    const self = this
     this.$store.commit('setScrollIndexMutations', 0) // 滚动条初始至顶部
-    $('.card-header.color-white.no-border.no-padding').css('height', $('#share').width())
-    self.commodityHomeScroll = $('#commodityHome-div-height').height() // 商品信息高度
+    $('.card-header.color-white.no-border.no-padding').css('height', $('#share').width()) // 设置商品信息图片高度
+    $('.mint-swipe').css('height', $('#share').width()) // 设置商品信息图片高度
+    this.getCommodityInformation() // 获取商品信息
   },
   deactivated () {
     this.$destroy() // 销毁
   },
   methods: {
-    uploadMenuClick (key, item) { // 上传类别
-      if (key === 'menu1') {
-        this.$router.push({ path: '/wx-friends' })
+    getCommodityInformation () { // 获取商品信息
+      const self = this
+      let param = {
+        id: self.$store.state.shoppingModules.commodityId
       }
+      self.$axioshttp.axios(self, API.mobileTerminal_commodityInformation, param).then(res => {
+        $.each(res.data.model.commodityImg, (i, value) => {
+          self.params.commodityImg.push({
+            img: value
+          })
+        })
+        self.params.title = res.data.model.title
+        self.params.money = res.data.model.money
+        self.params.colour = res.data.model.colour
+        self.params.size = res.data.model.size
+        self.params.phone = res.data.model.phone
+        self.params.qq = res.data.model.qq
+        self.params.detailsList = res.data.model.detailsList
+      })
     }
   }
 }

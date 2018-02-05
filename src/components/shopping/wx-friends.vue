@@ -17,7 +17,7 @@
 </style>
 
 <template>
-  <div id="wx-friends">
+  <div id="wx-friends" style="height: 100%;">
 
     <div class="card demo-card-header-pic grid-item-img">
     	
@@ -46,16 +46,16 @@
           			<span style="color: red;">{{'￥' + params.money}}</span>
           		</div>
           	</cell>
-          	<cell is-link title="利润方式" :value="params.profitPatternString" @click.native="getData.profitPatternActionsheet=true"></cell>
-          	<x-input :title="params.profitPatternString + (params.profitPattern === 'fixed' ? ' ￥' : ' %')" required :show-clear="false"></x-input>
-          	<x-input :show-clear="false" required>
+          	<cell is-link title="利润方式" type="number" :value="params.profitPatternString" @click.native="getData.profitPatternActionsheet=true"></cell>
+          	<x-input :title="params.profitPatternString + (params.profitPattern === 'fixed' ? ' ￥' : ' %')" type="number" :show-clear="false" v-model="params.profit"></x-input>
+          	<x-input :show-clear="false" type="number" v-model="params.actual">
           		<div slot="label">
           			<span>实际售卖价格</span>
           			<span class="vux-input-label-placeholder">(拿货价+利润)</span>
           			<span class="vux-input-label-symbol">￥</span>
           		</div>
           	</x-input>
-          	<x-input :show-clear="false" required>
+          	<x-input :show-clear="false" type="number" v-model="params.original">
           		<div slot="label">
           			<span>自定义原价</span>
           			<span class="vux-input-label-placeholder">(不填则不显示)</span>
@@ -69,10 +69,10 @@
       <div class="card-content">
         <div class="card-content-inner">
           <div class="card-content-inner-div-title">
-          	<x-input title="颜色" required text-align="right" :show-clear="false"></x-input>
-          	<x-input title="尺寸" required text-align="right" :show-clear="false"></x-input>
-          	<x-input title="手机号码" required mask="999 9999 9999" is-type="china-mobile" text-align="right" :max="13" v-model="params.commodityPhone" :show-clear="false"></x-input>
-          	<x-input title="QQ" required type="number" text-align="right" :show-clear="false"></x-input>
+          	<x-input title="颜色" text-align="right" v-model="params.colour" :show-clear="false"></x-input>
+          	<x-input title="尺寸" text-align="right" v-model="params.size" :show-clear="false"></x-input>
+          	<x-input title="手机号码" mask="999 9999 9999" text-align="right" :max="13" v-model="params.phone" :show-clear="false"></x-input>
+          	<x-input title="QQ" type="number" text-align="right" v-model="params.qq" :show-clear="false"></x-input>
           </div>
         </div>
       </div>
@@ -114,19 +114,25 @@ export default {
         commodityImg: [], // 商品图片
         title: '', // 标题
         showPrice: true, // 是否显示价格
-        money: '',
+        money: '', // 拿货价
         profitPatternString: '固定利润', // 利润方式名称
         profitPattern: 'fixed', // 利润方式类别
-        commodityPhone: '' // 手机号
+        profit: '', // 利润
+        actual: '', // 实际价格
+        original: '', // 原价
+        colour: '', // 颜色
+        size: '', // 尺寸
+        phone: '', // 手机号
+        qq: '' // QQ号
       },
       isNextStep: false // 下一步按钮状态
     }
   },
   activated () {
-    this.$store.commit('setScrollIndexMutations', 0) // 滚动条初始至顶部
     $('.card-header.color-white.no-border.no-padding').css('height', $('#wx-friends').width()) // 设置商品信息图片高度
     this.getCommodityInformation() // 获取商品信息
     this.isNextStep = false
+    this.$store.commit('setScrollIndexMutations', 0) // 滚动条初始至顶部
   },
   deactivated () {
     this.$destroy() // 销毁
@@ -146,6 +152,10 @@ export default {
         })
         self.params.title = res.data.model.title
         self.params.money = res.data.model.money
+        self.params.colour = res.data.model.colour
+        self.params.size = res.data.model.size
+        self.params.phone = res.data.model.phone
+        self.params.qq = res.data.model.qq
       })
     },
     profitPatternActionsheetClickMenu (key, item) { // 上传类别
@@ -153,28 +163,96 @@ export default {
       this.params.profitPattern = key
     },
     nextStep () { // 下一步按钮
-      const self = this
-      let is = true
+      if (!this.isNextStep) {
+        if (this.verification()) {
+          let param = {
+            title: this.params.title,
+            showPrice: this.params.showPrice,
+            profitPattern: this.params.profitPattern,
+            profit: this.params.profit,
+            actual: this.params.actual,
+            original: this.params.original,
+            colour: this.params.colour,
+            size: this.params.size,
+            phone: this.params.phone,
+            qq: this.params.qq
+          }
+          console.log(JSON.stringify(param))
+          this.$router.push({ path: '/choice-picture' })
+        }
+      }
+    },
+    verification () { // 表单验证
+      this.isNextStep = true
       let texts = ''
-      if (!self.isNextStep) {
-        self.isNextStep = true
-        if (self.params.title !== '') {
-          console.log(111)
-        } else {
-          is = false
+      if (this.isNextStep) { // 标题验证
+        if (this.params.title === '') {
+          this.isNextStep = false
           texts = '请填写标题'
         }
-        self.isNextStep = false
-        if (is) {
-          self.$router.push({ path: '/choice-picture' })
-        } else {
-          this.$vux.toast.text(texts, 'middle')
+      }
+      if (this.params.showPrice) { // 是否显示价格
+        if (this.isNextStep) { // 利润验证
+          if (this.params.profit === '') {
+            this.isNextStep = false
+            texts = '请填写获得的利润'
+          } else if (!(/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.params.profit))) {
+            this.isNextStep = false
+            texts = '请填写正确的利润金额'
+          }
         }
-//      document.activeElement.scrollIntoViewIfNeeded() // 可视区域
-//      setTimeout(() => {
-//        self.isNextStep = false
-//        self.$router.push({ path: '/choice-picture' })
-//      }, 0)
+        if (this.isNextStep) { // 实际价格验证
+          if (this.params.actual === '') {
+            this.isNextStep = false
+            texts = '请填写实际价格'
+          } else if (!(/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.params.actual))) {
+            this.isNextStep = false
+            texts = '请填写正确的实际价格金额'
+          }
+        }
+        if (this.isNextStep) { // 原价验证
+          if (this.params.original === '') {
+            this.isNextStep = false
+            texts = '请填写原价'
+          } else if (!(/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.params.original))) {
+            this.isNextStep = false
+            texts = '请填写正确的原价金额'
+          }
+        }
+      }
+      if (this.isNextStep) { // 颜色验证
+        if (this.params.colour === '') {
+          this.isNextStep = false
+          texts = '请填写颜色'
+        }
+      }
+      if (this.isNextStep) { // 尺寸验证
+        if (this.params.size === '') {
+          this.isNextStep = false
+          texts = '请填写尺寸'
+        }
+      }
+      if (this.isNextStep) { // 手机号验证
+        if (this.params.phone === '') {
+          this.isNextStep = false
+          texts = '请填写您的手机号'
+        } else if (!(/^1(3|4|5|7|8)\d{9}$/.test(this.params.phone.replace(/\s+/g, '')))) {
+          this.isNextStep = false
+          texts = '请确认您的手机号'
+        }
+      }
+      if (this.isNextStep) { // qq验证
+        if (this.params.qq === '') {
+          this.isNextStep = false
+          texts = '请填写您的QQ号'
+        }
+      }
+      if (this.isNextStep) {
+        return true
+      } else {
+        this.isNextStep = false
+        this.$vux.toast.text(texts, 'middle')
+        return false
       }
     }
   }
