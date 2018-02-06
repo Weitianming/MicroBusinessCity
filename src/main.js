@@ -13,6 +13,7 @@ import App from './App'
 import $ from 'jquery'
 import axioshttp from './api/axioshttp' // 网络请求方法
 import api from './api/api' // 接口
+import VueClipboard from 'vue-clipboard2' // 复制剪切板
 import 'lib-flexible' // 手机屏幕适配
 
 require('es6-promise').polyfill() // 搭配axios网络请求
@@ -26,6 +27,7 @@ Vue.use(ToastPlugin)
 Vue.use(WechatPlugin)
 Vue.use(MintUI)
 Vue.use(axioshttp)
+Vue.use(VueClipboard)
 
 require('./mock.js')
 

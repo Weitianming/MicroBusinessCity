@@ -1,5 +1,6 @@
 const mainModules = {
   state: { // 唯一数据源
+    isBrowser: '', // 浏览器类别
     shoppingScroll: 0, // 商品列表滚动条位置
     isShoppingScroll: false, // 商品列表滚动条位置状态
     scroll: -1, // 滚动条位置
@@ -7,6 +8,9 @@ const mainModules = {
     setScrollIndex: null // 设置滚动条位置
   },
   mutations: { // 修改数据
+    isBrowserMutations (state, value) { // 浏览器类别
+      state.isBrowser = value
+    },
     shoppingScrollMutations (state, value) { // 商品列表-滚动条位置
       state.shoppingScroll = value
     },

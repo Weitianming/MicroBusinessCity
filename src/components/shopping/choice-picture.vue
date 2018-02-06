@@ -1,6 +1,7 @@
 <style>
   
   /*基础样式*/
+  #choice-picture{height: calc(100% - 50px);}
   #choice-picture .card{margin: 0 auto; padding-bottom: 0px; box-shadow: 0 0; background-color: #fff;}
   #choice-picture .card-header.color-white.no-border.no-padding{width: 100%;}
   #choice-picture .card-content{background-color: #fff;}
@@ -14,14 +15,14 @@
   #choice-picture .vux-flexbox-check-icon{width: 25px; height: 25px; position: absolute; padding: 8px; right: 4px;}
   
   /*底部按钮*/
-  #choice-picture .weui-tabbar{position: fixed; height: 45px;}
+  #choice-picture .weui-tabbar{height: 45px;}
   #choice-picture .weui-tabbar .weui-btn{color: #fff; background-color: red;}
   #choice-picture .weui-btn{border-radius: 0px!important;}
   #choice-picture .weui-btn:after{display: none;}
 </style>
 
 <template>
-  <div id="choice-picture" style="height: calc(100% - 100px); background-color: #DEDEDE;">
+  <div id="choice-picture">
 
     <div class="card">
       <div class="card-content">
@@ -44,6 +45,7 @@
           </div>
         </flexbox-item>
       </flexbox>
+      
       <div v-transfer-dom id="choice-picture-previewer">
         <previewer :list="params.detailsList" ref="previewer" :options="options"></previewer>
       </div>
@@ -164,7 +166,7 @@ export default {
         }
         this.isNextStep = false
         if (is) {
-          this.$router.push({ path: '/share' })
+          this.$router.push({ path: '/share', query: {id: this.$store.state.shoppingModules.commodityId} })
         } else {
           this.$vux.toast.text('至少选择一张详情图片', 'middle')
         }

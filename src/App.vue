@@ -29,7 +29,7 @@
         <keep-alive>
           <router-view :class="classification.isState ? 'vux-header-scroll-top-div' : ''"></router-view>
         </keep-alive>
-        <div style="width: 100%; height: 100%; position: fixed; background-color: #DEDEDE;"></div>
+        <div style="width: 100%; height: 100%; top: 0; position: fixed; z-index: -1; background-color: #DEDEDE;"></div>
       </view-box>
     </div>
 
@@ -74,6 +74,7 @@ export default {
   },
   created () {
     this.getClassification() // 获取分类
+    this.getBrowser() // 判断浏览器
   },
   methods: {
     getClassification () { // 获取分类
@@ -88,6 +89,15 @@ export default {
     classificationClick (id) { // 分类按钮事件监听
       this.classification.isState = false
       this.$vux.toast.text('暂未开放', 'middle')
+    },
+    getBrowser () { // 判断浏览器
+      let ua = window.navigator.userAgent.toLowerCase()
+      if (ua.indexOf('micromessenger') > 0) { // 是否微信浏览器
+        this.$store.commit('isBrowserMutations', 'micromessenger')
+      }
+//    if (ua.match(/MicroMessenger/i) === 'micromessenger') { // 是否微信浏览器
+//      this.$store.commit('isBrowserMutations', 'micromessenger')
+//    }
     }
   },
   watch: {

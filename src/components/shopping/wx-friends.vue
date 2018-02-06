@@ -1,6 +1,6 @@
 <style>
   /*商品样式*/
-  #wx-friends .card{margin: 0 auto; padding-bottom: 45px; box-shadow: 0 0; background-color: #f6f6f6;}
+  #wx-friends .card{margin: 0 auto; box-shadow: 0 0; background-color: #f6f6f6;}
   #wx-friends .card-header.color-white.no-border.no-padding{width: 100%;}
   #wx-friends .mint-swipe{width: 100%; overflow: inherit;}
   #wx-friends .lazy-img{width: 100%;}
@@ -10,7 +10,7 @@
   #wx-friends .vux-input-label-symbol{margin-left: 5px;}
   
   /*底部按钮*/
-  #wx-friends .weui-tabbar{position: fixed; height: 45px;}
+  #wx-friends .weui-tabbar{position: inherit; height: 45px;}
   #wx-friends .weui-tabbar .weui-btn{color: #fff; background-color: red;}
   #wx-friends .weui-btn{border-radius: 0px!important;}
   #wx-friends .weui-btn:after{display: none;}
@@ -46,16 +46,16 @@
           			<span style="color: red;">{{'￥' + params.money}}</span>
           		</div>
           	</cell>
-          	<cell is-link title="利润方式" type="number" :value="params.profitPatternString" @click.native="getData.profitPatternActionsheet=true"></cell>
-          	<x-input :title="params.profitPatternString + (params.profitPattern === 'fixed' ? ' ￥' : ' %')" type="number" :show-clear="false" v-model="params.profit"></x-input>
-          	<x-input :show-clear="false" type="number" v-model="params.actual">
+          	<cell is-link title="利润方式" :value="params.profitPatternString" @click.native="getData.profitPatternActionsheet=true"></cell>
+          	<x-input :title="params.profitPatternString + (params.profitPattern === 'fixed' ? ' ￥' : ' %')" type="number" :show-clear="false" v-model="params.profit" @on-enter="vuxInput"></x-input>
+          	<x-input :show-clear="false" type="number" v-model="params.actual" placeholder=" ">
           		<div slot="label">
           			<span>实际售卖价格</span>
           			<span class="vux-input-label-placeholder">(拿货价+利润)</span>
           			<span class="vux-input-label-symbol">￥</span>
           		</div>
           	</x-input>
-          	<x-input :show-clear="false" type="number" v-model="params.original">
+          	<x-input :show-clear="false" type="number" v-model="params.original" placeholder=" ">
           		<div slot="label">
           			<span>自定义原价</span>
           			<span class="vux-input-label-placeholder">(不填则不显示)</span>
@@ -69,10 +69,10 @@
       <div class="card-content">
         <div class="card-content-inner">
           <div class="card-content-inner-div-title">
-          	<x-input title="颜色" text-align="right" v-model="params.colour" :show-clear="false"></x-input>
-          	<x-input title="尺寸" text-align="right" v-model="params.size" :show-clear="false"></x-input>
-          	<x-input title="手机号码" mask="999 9999 9999" text-align="right" :max="13" v-model="params.phone" :show-clear="false"></x-input>
-          	<x-input title="QQ" type="number" text-align="right" v-model="params.qq" :show-clear="false"></x-input>
+          	<x-input title="颜色" text-align="right" v-model="params.colour" :show-clear="false" @on-enter="vuxInput"></x-input>
+          	<x-input title="尺寸" text-align="right" v-model="params.size" :show-clear="false" @on-enter="vuxInput"></x-input>
+          	<x-input title="手机号码" type="tel" mask="999 9999 9999" text-align="right" :max="13" v-model="params.phone" :show-clear="false" @on-enter="vuxInput"></x-input>
+          	<x-input title="QQ" text-align="right" v-model="params.qq" :show-clear="false" @on-enter="nextStep"></x-input>
           </div>
         </div>
       </div>
@@ -161,6 +161,10 @@ export default {
     profitPatternActionsheetClickMenu (key, item) { // 上传类别
       this.params.profitPatternString = item
       this.params.profitPattern = key
+    },
+    vuxInput () { // 回车按钮
+      console.log(111)
+      this.params.title = '111111'
     },
     nextStep () { // 下一步按钮
       if (!this.isNextStep) {
