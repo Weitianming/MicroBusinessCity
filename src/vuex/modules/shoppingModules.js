@@ -9,11 +9,15 @@ const lsName = { // 本地缓存名称
 
 const shoppingModules = {
   state: { // 唯一数据源
-    commodityId: ls.getItem(lsName.commodityIdName) || 0 // 商品主键
+    commodityId: ls.getItem(lsName.commodityIdName) || 0, // 商品主键
+    isPopup: false // 显示分享提示框
   },
   mutations: { // 修改数据
     commodityIdMutations (state, value) { // 商品主键
       state.commodityId = value
+    },
+    isPopupMutationsTrue (state) { // 显示分享提示框
+      state.isPopup = true
     }
   },
   actions: { // 数据异步处理

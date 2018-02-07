@@ -163,7 +163,6 @@ export default {
       this.params.profitPattern = key
     },
     vuxInput () { // 回车按钮
-      console.log(111)
       this.params.title = '111111'
     },
     nextStep () { // 下一步按钮

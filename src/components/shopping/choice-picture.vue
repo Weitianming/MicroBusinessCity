@@ -52,7 +52,7 @@
     </div>
 
     <div class="weui-tabbar">
-      <x-button type="primary" :show-loading="isNextStep" @click.native="nextStep">下一步</x-button>
+      <x-button type="primary" :show-loading="isNextStep" @click.native="nextStep">生成商品</x-button>
     </div>
 
   </div>
@@ -166,6 +166,7 @@ export default {
         }
         this.isNextStep = false
         if (is) {
+          this.$store.commit('isPopupMutationsTrue') // 滚动条初始至顶部
           this.$router.push({ path: '/share', query: {id: this.$store.state.shoppingModules.commodityId} })
         } else {
           this.$vux.toast.text('至少选择一张详情图片', 'middle')

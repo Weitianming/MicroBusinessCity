@@ -102,8 +102,8 @@
         	</div>
         	<div class="vux-popup-div-content">本商品链接为：</div>
         	<div class="vux-popup-div-content">
-        		<x-input v-model="commodityUrl" :show-clear="false"></x-input>
-        		<span class="vux-input-span" v-clipboard:copy="commodityUrl" v-clipboard:success="copyUrl" v-clipboard:error="copyUrlError">复制</span>
+        		<x-input v-model="params.commodityUrl" :show-clear="false" placeholder=" "></x-input>
+        		<span class="vux-input-span" v-clipboard:copy="params.commodityUrl" v-clipboard:success="copyUrl" v-clipboard:error="copyUrlError">复制</span>
         	</div>
         	<div class="vux-popup-div-content">您也可以通过浏览器分享本商品页</div>
         </div>
@@ -115,6 +115,7 @@
 
 <script>
 import { TransferDom, Cell, Tabbar, TabbarItem, Divider, Popup, XInput } from 'vux'
+import { mapActions } from 'vuex'
 
 export default {
   directives: {
@@ -133,7 +134,7 @@ export default {
       isSelected: 'commodityHome', // 这是bug(不能删)
       isBrowser: true, // 判断是否是微信浏览器
       commodityId: '', // 分享商品主键
-      isPopup: true, // 分享提示框
+      isPopup: false, // 分享提示框
       params: {
         commodityUrl: '', // 当前商品URL
         commodityImg: [], // 商品图片
@@ -150,17 +151,32 @@ export default {
   },
   activated () {
     this.commodityId = this.$route.query.id
-    this.commodityUrl = window.location.href
-    this.$store.commit('setScrollIndexMutations', 0) // 滚动条初始至顶部
-    $('.card-header.color-white.no-border.no-padding').css('height', $('#share').width()) // 设置商品信息图片高度
-    $('.mint-swipe').css('height', $('#share').width()) // 设置商品信息图片高度
-    this.getCommodityInformation() // 获取商品信息
-    this.getBrowser() // 判断浏览器
+    if (this.commodityId !== '' && this.commodityId !== null && this.commodityId !== undefined) {
+      this.inif()
+    } else {
+      this.inifError()
+    }
   },
   deactivated () {
     this.$destroy() // 销毁
   },
   methods: {
+    ...mapActions('state/commonModules', ['isDisappearActions']),
+    inif () { // 初始化
+      this.isPopup = this.$store.state.shoppingModules.isPopup // 是否显示分享提示框
+      if (this.isPopup) {
+        this.params.commodityUrl = window.location.href // 获取当前链接
+      }
+      this.$store.commit('setScrollIndexMutations', 0) // 滚动条初始至顶部
+      $('.card-header.color-white.no-border.no-padding').css('height', $('#share').width()) // 设置商品信息图片高度
+      $('.mint-swipe').css('height', $('#share').width()) // 设置商品信息图片高度
+      this.getCommodityInformation() // 获取商品信息
+      this.getBrowser() // 判断浏览器
+    },
+    inifError () { // 商品不存在
+      this.$store.dispatch('isDisappearActions', 'warn')
+      this.$router.push({ path: '/commodity-disappear' })
+    },
     getCommodityInformation () { // 获取商品信息
       const self = this
       let param = {

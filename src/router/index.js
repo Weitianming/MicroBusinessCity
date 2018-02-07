@@ -27,15 +27,19 @@ export default new Router({
     },
     {
       path: '/wx-friends',
-      component: wxFriends => require(['@/components/shopping/wx-friends'], wxFriends) // 分享朋友圈-编辑
+      component: wxFriends => require(['@/components/shopping/wx-friends'], wxFriends) // 分享编辑-信息填写
     },
     {
       path: '/choice-picture',
-      component: choicePicture => require(['@/components/shopping/choice-picture'], choicePicture) // 分享朋友圈-编辑
+      component: choicePicture => require(['@/components/shopping/choice-picture'], choicePicture) // 分享编辑-选择图片
     },
     {
       path: '/share',
       component: share => require(['@/components/shopping/share'], share) // 分享页面
+    },
+    {
+      path: '/commodity-disappear',
+      component: commodityDisappear => require(['@/components/common/commodity-disappear'], commodityDisappear) // 页面提示窗口
     }
   ]
 })
