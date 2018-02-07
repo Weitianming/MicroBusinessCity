@@ -1,101 +1,152 @@
 <style>
-  #login .login-vux-input{padding: 0px!important; height: 3rem;}
-  #login .login-vux-input{border-bottom: 1px solid #D9D9D9;}
-  #login .forget-vux-input{padding: 0px!important; height: 3rem;}
-  #login .forget-vux-input{border-bottom: 1px solid #5E9BEB;}
-  #login .login-vux-input-labelImg{width: 1.5rem; height: 1.5rem; padding-right:10px; display:block;}
-  #login .login-vux-input-rightImg{margin-left: .2em; margin-right: .2em; width: 1.01rem;}
-  #login .popupPhone{width: 82.2%; background-color:#fff; height: 13rem; margin: 0 auto; border-radius:5px; margin-top: 4rem;}
-  #login .popupPhone-header{text-align: center; padding: 1.2rem; font-size: 1rem;}
-  #login .popupPhone-button{border-top-left-radius: 0px!important; border-top-right-radius: 0px!important;}
-  #login .forget-vux-input-code{float: left; width: 20%; height: 3rem; border: 1px solid #5E9BEB; padding: 0px;}
-  #login .forget-vux-input-code-width{margin-left: 5%;}
-  #login .forget-vux-input-code input{width: 20%; padding: 0px 1.2rem;}
+  #login{height: calc(100% - 46px); background-color: #FFFFFF;}
+  #login .login-header{padding: 30px 48px; font-size: 36px; font-weight: bold;}
+  #login .login-content{padding: 10px 48px;}
   #login .weui-cell:before{display: none;}
-  #login .weui-btn:after{display: none;}
+  #login .vux-x-input.weui-cell.login-vux-input{border-bottom: 1px solid #D9D9D9;/*no*/}
+  #login input{font-size: 18px; font-family: "微软雅黑";}
+  #login .login-vux-input-labelImg{width: 35px; height: 35px; padding-right: 5px; display:block;}
+  #login .login-vux-input-rightImg{margin-right: 0; width: 18px;}
+  #login .login-content-forget{text-align: right; padding: 0 48px; color: #5E9BEB;}
+  #login .login-content-button{padding: 24px 48px;}
+  
+  /*忘记密码-手机号*/
+  #login .popupPhone{width: 82.2%; background-color:#fff; height: 590px; margin: 0 auto; border-radius: 20px; margin-top: 150px; font-family: "微软雅黑";}
+  #login .login-vux-popup-rightImg{float: right; width: 72px;  height: 72px; margin-top: 20px;}
+  #login .popupPhone-header{text-align: center; padding: 48px; font-size: 48px; font-weight: bold;}
+  #login .popup-button{padding: 0px; margin-top: 52px;}
+  #login .popup-button button{font-size: 48px; height: 124px; border-radius: 0 0 20px 20px; padding: 0;}
+  
+  /*忘记密码-验证码*/
+  #login .forget-vux-code-div{padding: 20px 40px;}
+  #login .forget-vux-input-code-marginl{margin-left: 40px;}
+  #login .forget-vux-input-code{height: 144px; border: 1px solid #5E9BEB;/*no*/ border-radius: 20px;}
+  #login .forget-vux-input-code input{text-align: center;}
+  #login .forget-vux-code{padding: 0 40px;}
+  #login .forget-vux-code-button{padding: 0px; margin-top: 30px;}
+  #login .forget-vux-code-button button{font-size: 48px; height: 124px; border-radius: 0 0 20px 20px; padding: 0;}
+  
+  /*忘记密码-新密码*/
+  #login .forget-vux-passsword-div{padding: 20px 96px 30px 96px;}
+  #login .bbs{border-bottom: 1px solid #5E9BEB!important; /*no*/}
+  #login .forget-vux-passsword{padding: 0 96px; color: #999999;}
+  #login .forget-vux-passsword-button{padding: 0px; margin-top: 48px;}
+  #login .forget-vux-passsword-button button{font-size: 48px; height: 124px; border-radius: 0 0 20px 20px; padding: 0;}
+  
 </style>
 
 <template>
   <div id="login">
+  	
     <div>
       <div class="login-header">登录</div>
-      <div style="padding: 1rem 2rem;">
-        <x-input type="text" class="login-vux-input" placeholder="手机号" v-model="loginData.loginUsername">
-          <img slot="label" class="login-vux-input-labelImg" src="../../static/assets/Rectangle 4 Copy.png">
+      <div class="login-content">
+        <x-input type="text" mask="999 9999 9999" class="login-vux-input" placeholder="用户名" v-model="loginData.loginUsername">
+          <img slot="label" class="login-vux-input-labelImg" src="../../static/assets/Rectangle 4.png">
         </x-input>
         <x-input :type="isInputTypePassword" class="login-vux-input" :show-clear="false" placeholder="密码" v-model="loginData.loginPassword">
-          <img slot="label" class="login-vux-input-labelImg" src="../../static/assets/Rectangle 4.png">
-          <img v-show="isRightImg" slot="right" class="login-vux-input-rightImg" src="../../static/assets/kj.png" @click="rightImgClick">
+          <img slot="label" class="login-vux-input-labelImg" src="../../static/assets/Rectangle 4 Copy.png">
+          <img v-show="!isRightImg?false:(isInputTypePassword==='text'?false:true)" slot="right" class="login-vux-input-rightImg" :src="img.kj" @click="rightImgClick">
+          <img v-show="!isRightImg?false:(isInputTypePassword==='text'?true:false)" slot="right" class="login-vux-input-rightImg" :src="img.nkj" @click="rightImgClick">
         </x-input>
       </div>
-      <div style="padding-left: 2rem; font-size: 0.75rem; color: #5E9BEB;" @click="forget">忘记密码?</div>
-      <div style="padding: 0px 2rem; margin-top: 1.5rem;">
-        <x-button type="primary" :class="[isLoginButton ? 'weui-btn_disabled' : 'weui-btn_primary']" :disabled="isLoginButton" @click.native="loginButton">登录</x-button>
+      <div class="login-content-forget" @click="forget">忘记密码?</div>
+      <div class="login-content-button">
+        <x-button type="primary" class="weui-btn_primary" @click.native="loginButton" :show-loading="isLoginShowLoading">登录</x-button>
       </div>
     </div>
+    
     <div>
-    	<!--手机号-->
+      <!--手机号-->
       <popup v-model="popup.isPopupShow" position="top" :hide-on-blur="false" is-transparent>
         <div class="popupPhone">
-        	<div class="popupPhone-header">输入手机号</div>
-		      <div style="padding: 1rem 2rem;">
-		        <x-input type="text" class="forget-vux-input" placeholder="请输入手机号" v-model="forgetParams.phone" :show-clear="false">
-		        </x-input>
-		      </div>
-		      <div style="padding: 0px; margin-top: 1.33rem;">
-		        <x-button class="popupPhone-button" type="primary" :class="[isPopupPhone ? 'weui-btn_disabled' : 'weui-btn_primary']" :disabled="isPopupPhone" @click.native="popupPhoneButton" :show-loading="isPopupPhoneShowLoading">下一步</x-button>
-		      </div>
+          <img class="login-vux-popup-rightImg" src="../../static/assets/car_easy_tip_icon_close.png" @click="popupCloseClick">
+          <div class="popupPhone-header">输入手机号
+          </div>
+          <div class="login-content">
+            <x-input type="text" class="login-vux-input" placeholder="请输入手机号" v-model="forgetParams.phone" :show-clear="false"></x-input>
+          </div>
+          <div class="popup-button">
+            <x-button type="primary" :class="[isPopupPhone ? 'weui-btn_disabled' : 'weui-btn_primary']" :disabled="isPopupPhone" @click.native="popupPhoneButton" :show-loading="isPopupPhoneShowLoading">下一步</x-button>
+          </div>
         </div>
       </popup>
-    	<!--验证码-->
+      
+      <!--验证码-->
       <popup v-model="popup.isPopupCodeShow" position="top" :hide-on-blur="false" is-transparent>
         <div class="popupPhone">
-        	<div class="popupPhone-header">输入验证码</div>
-		      <div style="padding: 0rem 2rem; height: 3.37rem;">
-		        <x-input type="number" class="forget-vux-input-code" v-model="forgetParams.codea" ref="codea" :show-clear="false" :max="1" required @on-focus="vuxInputSelect"></x-input>
-		        <x-input type="number" class="forget-vux-input-code forget-vux-input-code-width" v-model="forgetParams.codeb" ref="codeb" :show-clear="false" :max="1" required @on-focus="vuxInputSelect"></x-input>
-		        <x-input type="number" class="forget-vux-input-code forget-vux-input-code-width" v-model="forgetParams.codec" ref="codec" :show-clear="false" :max="1" required @on-focus="vuxInputSelect"></x-input>
-		        <x-input type="number" class="forget-vux-input-code forget-vux-input-code-width" v-model="forgetParams.coded" ref="coded" :show-clear="false" :max="1" required @on-focus="vuxInputSelect"></x-input>
-		      </div>
-		      <div style="padding: 0.81rem 2rem 0px 2rem;">
-		      	<a v-show="forgetTimeData <= 0 ? true : false" type="button" style="color: #5E9BEB;" @click="getCode">获取验证码</a>
+          <img class="login-vux-popup-rightImg" src="../../static/assets/car_easy_tip_icon_close.png" @click="popupCloseClick">
+          <div class="popupPhone-header">输入验证码</div>
+          <div class="forget-vux-code-div">
+          	<flexbox :gutter="0">
+				      <flexbox-item>
+				      	<x-input type="number" class="forget-vux-input-code" v-model="forgetParams.codea" ref="codea" :show-clear="false" :max="1" required @on-focus="vuxInputSelect"></x-input>
+				      </flexbox-item>
+				      <flexbox-item class="forget-vux-input-code-marginl">
+				      	<x-input type="number" class="forget-vux-input-code" v-model="forgetParams.codeb" ref="codeb" :show-clear="false" :max="1" required @on-focus="vuxInputSelect"></x-input>
+				      </flexbox-item>
+				      <flexbox-item class="forget-vux-input-code-marginl">
+				      	<x-input type="number" class="forget-vux-input-code" v-model="forgetParams.codec" ref="codec" :show-clear="false" :max="1" required @on-focus="vuxInputSelect"></x-input>
+				      </flexbox-item>
+				      <flexbox-item class="forget-vux-input-code-marginl">
+				      	<x-input type="number" class="forget-vux-input-code" v-model="forgetParams.coded" ref="coded" :show-clear="false" :max="1" required @on-focus="vuxInputSelect"></x-input>
+				      </flexbox-item>
+				    </flexbox>
+          </div>
+          <div class="forget-vux-code">
+            <a v-show="forgetTimeData <= 0 ? true : false" type="button" style="color: #5E9BEB;" @click="getCode">获取验证码</a>
             <a v-show="forgetTimeData > 0 ? true : false" type="button" style="color: #BCBCBC;">重新发送({{forgetTimeData}})</a>
-		      </div>
-		      <div style="padding: 0px; margin-top: 1.02rem;">
-		        <x-button class="popupPhone-button" type="primary" :class="[isPopupCode ? 'weui-btn_disabled' : 'weui-btn_primary']" :disabled="isPopupCode" @click.native="popupCodeButton" :show-loading="isPopupCodeShowLoading">下一步</x-button>
-		      </div>
+          </div>
+          <div class="forget-vux-code-button">
+            <x-button type="primary" :class="[isPopupCode ? 'weui-btn_disabled' : 'weui-btn_primary']" :disabled="isPopupCode" @click.native="popupCodeButton" :show-loading="isPopupCodeShowLoading">下一步</x-button>
+          </div>
         </div>
       </popup>
-    	<!--新密码-->
+      
+      <!--新密码-->
       <popup v-model="popup.isPopupPassswordShow" position="top" :hide-on-blur="false" is-transparent>
         <div class="popupPhone">
-        	<div class="popupPhone-header">设置新密码</div>
-		      <div style="padding: 1rem 2rem;">
-		        <x-input :type="isForgetPasswordType" class="register-vux-input" placeholder="请输入密码" v-model="forgetParams.password">
-		        </x-input>
-		      </div>
-		      <div style="padding: 0px; margin-top: 1.02rem;">
-		        <x-button class="popupPhone-button" type="primary" :class="[isPopupCode ? 'weui-btn_disabled' : 'weui-btn_primary']" :disabled="isPopupCode" @click.native="popupCodeButton" :show-loading="isPopupCodeShowLoading">完成</x-button>
-		      </div>
+          <img class="login-vux-popup-rightImg" src="../../static/assets/car_easy_tip_icon_close.png" @click="popupCloseClick">
+          <div class="popupPhone-header">设置新密码</div>
+          <div class="forget-vux-passsword-div">
+            <x-input :type="isForgetPasswordType" class="login-vux-input bbs" placeholder="请输入密码" v-model="forgetParams.password" :show-clear="false">
+              <img v-show="isForgetRightImg" slot="right" class="login-vux-input-rightImg" src="../../static/assets/kj.png" @click="forgetRightImgClick">
+            </x-input>
+          </div>
+          <div class="forget-vux-passsword">
+          	<a type="button">密码由6-15位字母数字组合</a>
+          </div>
+          <div class="forget-vux-passsword-button">
+            <x-button type="primary" :class="[isPopupPasssword ? 'weui-btn_disabled' : 'weui-btn_primary']" :disabled="isPopupPasssword" @click.native="popupPassswordButton" :show-loading="isPopupPasswordShowLoading">完成</x-button>
+          </div>
         </div>
       </popup>
+      
     </div>
+    
   </div>
 </template>
 
 <script>
-import { XInput, XButton, Popup } from 'vux'
+import { XInput, XButton, Popup, Flexbox, FlexboxItem } from 'vux'
 import { mapState, mapActions } from 'vuex'
+import kj from '@/assets/kj.png'
+import nkj from '@/assets/car_easy_list_control_eyeclose_normal.png'
 
 export default {
   components: {
     XInput,
     XButton,
-    Popup
+    Popup,
+    Flexbox,
+    FlexboxItem
   },
   data () {
     return {
-      mas: '',
+      img: {
+        kj: kj,
+        nkj: nkj
+      },
       isInputTypePassword: 'password', // 切换密码是否隐藏
       loginData: { // 登录参数
         loginUsername: '', // 账号
@@ -103,6 +154,7 @@ export default {
       },
       isRightImg: false, // 切换密码是否隐藏图标
       isLoginButton: true, // 是否禁用登录按钮
+      isLoginShowLoading: false, // 登录按钮加载
       forgetParams: { // 忘记密码参数
         phone: '', // 手机号
         codea: '', // 验证码1
@@ -114,22 +166,29 @@ export default {
       popup: { // 忘记密码对话框
         isPopupShow: false, // 手机号对话框
         isPopupCodeShow: false, // 验证码对话框
-        isPopupPassswordShow: true // 设置密码对话框
+        isPopupPassswordShow: false // 设置密码对话框
       },
-      isForgetPasswordType: 'password', // 密码是否可见
-      isPopupPhone: true, // 手机号对话框按钮
-      isPopupCode: true, // 验证码对话框按钮
-      isPopupPhoneShowLoading: false, // 手机号对话框按钮加载
-      isPopupCodeShowLoading: false // 验证码对话框按钮加载
+      isForgetRightImg: false, // 忘记密码-密码是否可见按钮
+      isForgetPasswordType: 'password', // 忘记密码-密码是否可见
+      isPopupPhone: true, // 忘记密码-手机号对话框按钮
+      isPopupCode: true, // 忘记密码-验证码对话框按钮
+      isPopupPasssword: true, // 忘记密码-完成按钮
+      isPopupPhoneShowLoading: false, // 忘记密码-手机号对话框按钮加载
+      isPopupCodeShowLoading: false, // 忘记密码-验证码对话框按钮加载
+      isPopupPasswordShowLoading: false // 忘记密码-完成对话框按钮加载
     }
   },
   created () {},
   activated () {
-    this.$store.commit('ASSIGNMENTTRUE') // 显示注册按钮
+//  this.$store.commit('TITLENAME', '登录')
+//  this.$store.commit('MAINBCMUTATIONS', '0')
+//  this.$store.commit('ASSIGNMENTTRUE') // 显示注册按钮
   },
   deactivated () {
-    this.$store.commit('ASSIGNMENTFALSE') // 隐藏注册按钮
-    this.loginData.loginPassword = ''
+    const self = this
+//  self.$store.commit('ASSIGNMENTFALSE') // 隐藏注册按钮
+//  self.$store.commit('MAINBCMUTATIONS', '1')
+    self.loginData.loginPassword = ''
   },
   computed: {
     ...mapState({ // vuex辅助函数
@@ -139,6 +198,7 @@ export default {
   },
   methods: {
     ...mapActions('state/loginModules', ['assignmentForgetPhone', 'assignmentForgetTime']),
+    ...mapActions('state/MainModules', ['loginDataActions', 'userInterfaceActions', 'leaseInterfaceActions']),
     rightImgClick () { // 切换密码是否隐藏图标
       const self = this
       if (self.isInputTypePassword === 'password') {
@@ -149,6 +209,7 @@ export default {
     },
     loginButton () { // 登录按钮事件监听
       const self = this
+      self.isLoginShowLoading = true
       var params = {
         username: self.loginData.loginUsername,
         password: self.loginData.loginPassword,
@@ -160,12 +221,19 @@ export default {
           deploySign: 'ZKML_RENT'
         }]
       }
-      self.$axioshttp.personal(self, global.API.mobileTerminal_login, params).then(res => {
-        console.log(JSON.stringify(res))
+      self.$axioshttp.personal(self, API.mobileTerminal_login, params).then(res => {
+        self.isLoginShowLoading = false
+        self.loginHandle(res)
       })
     },
     forget () { // 忘记密码
       const self = this
+      self.forgetParams.phone = ''
+      self.forgetParams.codea = ''
+      self.forgetParams.codeb = ''
+      self.forgetParams.codec = ''
+      self.forgetParams.coded = ''
+      self.forgetParams.password = ''
       self.popup.isPopupShow = true
     },
     popupPhoneButton () { // 忘记密码-手机对话框-下一步
@@ -174,8 +242,7 @@ export default {
       var params = {
         phone: self.forgetParams.phone
       }
-      self.$axioshttp.personal(self, global.API.mobileTerminal_findPasswordVerifyPhone, params).then(res => {
-        console.log(JSON.stringify(res))
+      self.$axioshttp.personal(self, API.mobileTerminal_findPasswordVerifyPhone, params).then(res => {
         self.isPopupPhoneShowLoading = false
         self.popup.isPopupShow = false
         if (res.data.result === 'success') {
@@ -195,43 +262,75 @@ export default {
         phone: self.forgetPhoneData,
         code: `${self.forgetParams.codea}${self.forgetParams.codeb}${self.forgetParams.codec}${self.forgetParams.coded}`
       }
-      self.$axioshttp.personal(self, global.API.mobileTerminal_findPasswordVerifyVerificationCode, params).then(res => {
-        console.log(JSON.stringify(res))
+      self.$axioshttp.personal(self, API.mobileTerminal_findPasswordVerifyVerificationCode, params).then(res => {
         self.isPopupCodeShowLoading = false
+        self.popup.isPopupCodeShow = false
         self.popup.isPopupPassswordShow = true
-        if (res.data.result === 'success') {
-        } else {
-          self.$axioshttp.alertShow(self, '提示', res.data.message)
+        try {
+          if (res.data.result === 'success') {
+            self.popup.isPopupCodeShow = false
+            self.popup.isPopupPassswordShow = true
+          } else {
+            self.$axioshttp.toastShow(self, res.data.message)
+          }
+        } catch (e) {
+          self.$axioshttp.toastShow(self, '验证码错误')
         }
       })
     },
     popupPassswordButton () { // 忘记密码-设置密码-登录
       const self = this
-      self.isPopupCodeShowLoading = true
+      self.isPopupPasswordShowLoading = true
       var params = {
-        phone: self.forgetPhoneData,
-        code: `${self.forgetParams.codea}${self.forgetParams.codeb}${self.forgetParams.codec}${self.forgetParams.coded}`
+        password: self.forgetParams.password
       }
-      self.$axioshttp.personal(self, global.API.mobileTerminal_findPasswordVerifyVerificationCode, params).then(res => {
-        console.log(JSON.stringify(res))
-        self.isPopupCodeShowLoading = false
-        self.popup.isPopupCodeShow = false
-        if (res.data.result === 'success') {
-        } else {
-          self.$axioshttp.alertShow(self, '提示', res.data.message)
-        }
+      self.$axioshttp.personal(self, API.mobileTerminal_setUserPasssword, params).then(res => {
+        self.isPopupPasswordShowLoading = false
+        self.popup.isPopupPassswordShow = false
+        self.loginHandle(res)
       })
+    },
+    loginHandle (res) { // 登录操作
+      const self = this
+      console.log(JSON.stringify(res))
+      if (res.data.result === 'success') {
+        self.$store.dispatch('loginDataActions', JSON.stringify(res)) // 本地缓存登录信息
+        self.$store.dispatch('mainIndexActions', '1') // 本地缓存主页位置
+        $.each(res.data.model.deploySignJson, (i, value) => {
+          if (value.deploySign === 'ZKML_COMPANY') {
+            self.$store.dispatch('userInterfaceActions', value.url) // 本地缓存用户平台接口
+          } else if (value.deploySign === 'ZKML_RENT') {
+            self.$store.dispatch('leaseInterfaceActions', value.url) // 本地缓存租赁平台接口
+          }
+        })
+        self.$router.push({ path: '/index/travel' })
+      } else {
+        self.$axioshttp.alertShow(self, '提示', res.data.message)
+      }
+    },
+    popupCloseClick () { // 关闭对话框
+      this.popup.isPopupShow = false
+      this.popup.isPopupCodeShow = false
+      this.popup.isPopupPassswordShow = false
     },
     getCode () { // 获取验证码
       const self = this
       var params = {
         phone: self.forgetPhoneData
       }
-      self.$axioshttp.personal(self, global.API.mobileTerminal_findPasswordVerifyPhone, params).then(res => {
+      self.$axioshttp.personal(self, API.mobileTerminal_findPasswordVerifyPhone, params).then(res => {
         self.$store.dispatch('assignmentForgetTime', '60') // 本地缓存计时
       })
     },
-    vuxInputSelect (val, $event) {
+    forgetRightImgClick () { // 忘记密码-密码是否可见
+      const self = this
+      if (self.isForgetPasswordType === 'password') {
+        self.isForgetPasswordType = 'text'
+      } else {
+        self.isForgetPasswordType = 'password'
+      }
+    },
+    vuxInputSelect (val, $event) { // 选中文字内容
       $event.target.select()
     }
   },
@@ -332,6 +431,19 @@ export default {
         this.isPopupCode = true
         var a = this.forgetParams.coded.substring(0, 1)
         this.forgetParams.coded = a
+      }
+    },
+    'forgetParams.password': function (val) { // 忘记密码-设置密码
+      if (this.forgetParams.password !== '') {
+        this.isForgetRightImg = true
+        if (this.forgetParams.password.length >= 6 && this.forgetParams.password.length <= 15) {
+          this.isPopupPasssword = false
+        } else {
+          this.isPopupPasssword = true
+        }
+      } else {
+        this.isForgetRightImg = false
+        this.isPopupPasssword = true
       }
     }
   }
